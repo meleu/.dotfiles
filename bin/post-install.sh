@@ -44,8 +44,6 @@ FLATPAK_PACKAGES=(
   com.bitwarden.desktop
 )
 
-DOT_FILES_REPO="git@github.com:meleu/dotfiles.git"
-
 readonly SRC_DIR="${HOME}/src"
 
 readonly SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" && pwd )"
@@ -89,24 +87,6 @@ installPkg() {
 
 flatpakInstall() {
   flatpak install --noninteractive flathub "$@"
-}
-
-
-installDotfiles() {
-  local ghDir="${SRC_DIR}/github"
-  local dotfilesDir="${DOT_FILES_REPO##*/}"
-  dotfilesDir="${dotfilesDir%.*}"
-
-  echoGreen "\n--> installing my dotfiles from '${DOT_FILES_REPO}'..."
-
-  mkdir -p "${ghDir}"
-  cd "${ghDir}"
-
-  git clone "${DOT_FILES_REPO}"
-  cd "${dotfilesDir}"
-  bash install.sh
-
-  cd "${HOME}"
 }
 
 
@@ -185,6 +165,13 @@ installKubectl() {
 }
 
 
+installMinikube() {
+  # https://minikube.sigs.k8s.io/docs/start/
+  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+  sudo dpkg -i minikube_latest_amd64.deb
+}
+
+
 installGcloud() {
   isInstalled gcloud && return
 
@@ -256,13 +243,12 @@ main() {
 
   installPkg "${MINIMUM_PACKAGES[@]}" "${PACKAGES[@]}"
   flatpakInstall "${FLATPAK_PACKAGES[@]}"
-  #installDotfiles
   installVSCode
   installDocker
   installKubectl
-  #installMinikube
+  installMinikube
   installGcloud
-  #installSyncthing
+  installSyncthing
   installBraveBrowser
 }
 
