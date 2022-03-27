@@ -6,6 +6,10 @@ if [ -f "${HOME}/.bash_functions_private" ]; then
   source "${HOME}/.bash_functions_private"
 fi
 
+err() {
+  echo -e "${ansiRed}$*${ansiNoColor}" >&2
+}
+
 
 # urlencode(): URL encode using pure bash.
 urlencode() {
@@ -123,3 +127,22 @@ transfer() {
 dud() {
   du --max-depth 1 --human-readable "${@:-.}" | sort --human-numeric-sort
 }
+
+
+getGithubLatestVersion() {
+  local repo="$1"
+  local regexUserSlashRepo='^[^/]+/[^/]+$'
+
+  if [[ ! "${repo}" =~ $regexUserSlashRepo ]]; then
+    err "ERROR: invalid argument '${repo}'"
+    echo "Usage: ${FUNCNAME[0]} user/repo" >&2
+    return 1
+  fi
+
+  curl \
+    --silent \
+    --location \
+    "https://api.github.com/repos/${repo}/releases/latest" \
+    | jq -e --raw-output '.tag_name'
+}
+

@@ -56,7 +56,7 @@ umask 027
 # Prompt
 ###############################################################################
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:[\[\033[01;34m\]\w\[\033[00m\]$(
-  [[ $(git rev-parse --git-dir) != ${HOME}/.git ]] \
+  [[ $(git rev-parse --git-dir 2>/dev/null) != ${HOME}/.git ]] \
     && branch="$(git branch --show-current 2> /dev/null)" \
     && echo " ($branch)"
 )]\n\$ '
@@ -80,7 +80,7 @@ export BATS_RUN_SKIPPED=true
 #source "$ZZPATH"
 
 
-# asdf version manager - asdf-vm.com
+# asdf version manager - https://asdf-vm.com
 ###############################################################################
 source "${HOME}/.asdf/asdf.sh"
 source "${HOME}/.asdf/completions/asdf.bash"

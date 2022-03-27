@@ -26,6 +26,7 @@ MINIMUM_PACKAGES=(
 
 PACKAGES=(
   bat
+  figlet
   vim-gtk
   xclip
   virtualbox
