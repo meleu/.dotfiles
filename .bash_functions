@@ -1,3 +1,4 @@
+#!/bin/bash
 # meleu's .bash_function
 ########################
 
@@ -6,9 +7,34 @@ if [ -f "${HOME}/.bash_functions_private" ]; then
   source "${HOME}/.bash_functions_private"
 fi
 
-err() {
-  echo -e "${ansiRed}$*${ansiNoColor}" >&2
+# functions for colorized output
+###############################################################################
+# ANSI escape color codes
+readonly ansiRed='\e[1;31m'
+readonly ansiGreen='\e[1;32m'
+readonly ansiYellow='\e[1;33m'
+readonly ansiNoColor='\e[0m'
+
+echoRed() {
+  echo -e "${ansiRed}$*${ansiNoColor}"
 }
+
+echoGreen() {
+  echo -e "${ansiGreen}$*${ansiNoColor}"
+}
+
+echoYellow() {
+  echo -e "${ansiYellow}$*${ansiNoColor}"
+}
+
+err() {
+  echoRed "$*" >&2
+}
+
+warn() {
+  echoYellow "$*" >&2
+}
+###############################################################################
 
 
 # urlencode(): URL encode using pure bash.
