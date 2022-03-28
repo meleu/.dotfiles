@@ -1,3 +1,4 @@
+#!/bin/bash
 # meleu's .bashrc
 #################
 
@@ -17,17 +18,37 @@
 # of LINES and COLUMNS
 shopt -s checkwinsize
 
-# Make bash append rather than overwrite the history on disk
-shopt -s histappend
-
 # History Options
 ###############################################################################
-# Don't put duplicate lines or lines starting with space in the history.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoreboth
+# inspiration:
+# - https://gist.github.com/ckabalan/7d374ceea8c2d9dd237d763d385cf2aa
+# - https://linuxhint.com/bash_command_history_usage/
+
+# HISTCONTROL options
+# ignorespace - eliminates commands that begin with a space history list.
+# ignoredups - eliminate duplicate commands (from the current session)
+# ignoreboth - Enable both ignoredups and ignorespace
+# erasedups - eliminate duplicates from the whole list (I don't use it)
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoreboth
+
+# ignore the following commands
+export HISTIGNORE='ls:ls -lah:history:pwd:htop:bg:fg:clear'
+
+# show a timestamp in the history command output
+export HISTTIMEFORMAT="%F %T$ "
+
+# append last command to the history right before next prompt
+export PROMPT_COMMAND+=( 'history -a' )
 
 # history length - see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+
+# make bash append rather than overwrite the history on disk
+shopt -s histappend
+
+# save all lines of a mult-line command in the same entry
+shopt -s cmdhist
 
 
 # Aliases

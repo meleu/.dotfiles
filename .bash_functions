@@ -10,10 +10,12 @@ fi
 # functions for colorized output
 ###############################################################################
 # ANSI escape color codes
-readonly ansiRed='\e[1;31m'
-readonly ansiGreen='\e[1;32m'
-readonly ansiYellow='\e[1;33m'
-readonly ansiNoColor='\e[0m'
+if [[ -z "${ansiRed}" ]]; then
+  readonly ansiRed='\e[1;31m'
+  readonly ansiGreen='\e[1;32m'
+  readonly ansiYellow='\e[1;33m'
+  readonly ansiNoColor='\e[0m'
+fi
 
 echoRed() {
   echo -e "${ansiRed}$*${ansiNoColor}"
