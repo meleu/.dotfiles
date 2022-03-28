@@ -8,11 +8,7 @@
 # meleu - https://meleu.dev/
 # shellcheck disable=2155,2164,1091
 #
-# things I'm uncertain if I want to always install
-# - hugo
-#   - https://gohugo.io/getting-started/installing/
-#   - https://github.com/gohugoio/hugo/releases
-# - asdf-vm - https://asdf-vm.com/
+# TODO: install hyperfine
 
 MINIMUM_PACKAGES=(
   vim
@@ -47,7 +43,7 @@ FLATPAK_PACKAGES=(
 
 readonly SRC_DIR="${HOME}/src"
 
-readonly SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" && pwd )"
+readonly SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 # functions for colorized output
 ###############################################################################
@@ -78,35 +74,77 @@ warn() {
   echoYellow "$*" >&2
 }
 
-# functions to install software
+# helper functions
 ###############################################################################
 
 installPkg() {
   sudo apt-get update && sudo apt-get install -y "$@"
 }
 
-
 flatpakInstall() {
   flatpak install --noninteractive flathub "$@"
 }
 
-
 # returns success if "$1" is installed
 isInstalled() {
   local command="$1"
-
-  if command -v "${command}"; then
-    warn "WARNING: '${command} seems to be already installed. Skipping..."
-    return 
-  fi
-
-  return 1
+  command -v "${command}" || return 1
+  warn "Skipping: '${command}' seems to be already installed."
 }
 
+getGithubLatestVersion() {
+  local repo="$1"
+  local regexUserSlashRepo='^[^/]+/[^/]+$'
+
+  if [[ ! "${repo}" =~ $regexUserSlashRepo ]]; then
+    err "ERROR: invalid argument '${repo}'"
+    echo "Usage: ${FUNCNAME[0]} user/repo" >&2
+    return 1
+  fi
+
+  curl \
+    --silent \
+    --location \
+    "https://api.github.com/repos/${repo}/releases/latest" \
+    | jq -e --raw-output '.tag_name'
+}
+
+# functions to install software
+###############################################################################
+installAsdfvm() {
+  isInstalled asdf && return
+  echoGreen "\n--> installing asdf version manager..."
+
+  local asdfDir="${HOME}/.asdf"
+  local latestVersion
+
+  if [[ -d "${HOME}/.asdf/" ]]; then
+    warn "WARNING: '${asdfDir}': directory exists but you don't have 'asdf' in you PATH.\nCheck instructions: https://asdf-vm.com/guide/getting-started.html"
+  fi
+
+  latestVersion="$(getGithubLatestVersion asdf-vm/asdf)"
+
+  git clone https://github.com/asdf-vm/asdf.git "${asdfDir}" --branch "${latestVersion}"
+  echo 'source "${HOME}/.asdf/asdf.sh"' >> ~/.bashrc
+  echo 'source "${HOME}/.asdf/completions/asdf.bash"' >> ~/.bashrc
+}
+
+installHyperfine() {
+  isInstalled hyperfine && return
+  echoGreen "\n--> installing hyperfine version manager..."
+  
+  local repo='sharkdp/hyperfine'
+  local latestVersion="$(getGithubLatestVersion "${repo}")"
+  local debFile="hyperfine_${latestVersion#v}_${ARCHITECTURE}.deb"
+  
+  # https://github.com/sharkdp/hyperfine/releases
+  curl -LO "https://github.com/${repo}/releases/download/${latestVersion}/${debFile}"
+  sudo dpkg -i "${debFile}"
+  rm -f "${debFile}"
+}
 
 installVSCode() {
   isInstalled code && return
-
   echoGreen "\n--> installing Visual Studio Code..."
 
   # https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
@@ -123,10 +161,8 @@ installVSCode() {
   installPkg code
 }
 
-
 installDocker() {
   isInstalled docker && return
-
   echoGreen "\n--> installing docker..."
 
   # https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
@@ -147,10 +183,8 @@ installDocker() {
   docker version
 }
 
-
 installKubectl() {
   isInstalled kubectl && return
-
   echoGreen "\n--> installing kubectl..."
 
   # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
@@ -165,17 +199,29 @@ installKubectl() {
   installPkg kubectl
 }
 
-
 installMinikube() {
+  isInstalled minikube && return
+  echoGreen "\n--> installing minikube..."
+
+  local debFile='minikube_latest_amd64.deb'
+
   # https://minikube.sigs.k8s.io/docs/start/
-  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-  sudo dpkg -i minikube_latest_amd64.deb
+  curl -LO "https://storage.googleapis.com/minikube/releases/latest/${debFile}"
+  sudo dpkg -i "${debFile}"
+  rm -f "${debFile}"
 }
 
+installYtdl() {
+  isInstalled youtube-dl && return
+  echoGreen "\n--> installing youtube-dl..."
+
+  # https://github.com/ytdl-org/youtube-dl#installation
+  sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+  sudo chmod a+rx /usr/local/bin/youtube-dl
+}
 
 installGcloud() {
   isInstalled gcloud && return
-
   echoGreen "\n--> installing gcloud..."
 
   # https://cloud.google.com/sdk/docs/install#deb
@@ -190,10 +236,8 @@ installGcloud() {
   installPkg google-cloud-cli
 }
 
-
 installBraveBrowser() {
   isInstalled brave-browser && return
-
   echoGreen "\n--> installing brave-browser..."
 
   # https://brave.com/linux/#release-channel-installation
@@ -208,10 +252,8 @@ installBraveBrowser() {
   installPkg brave-browser
 }
 
-
 installSyncthing() {
   isInstalled syncthing && return
-
   echoGreen "\n--> installing syncthing..."
 
   # https://apt.syncthing.net/
@@ -226,14 +268,14 @@ installSyncthing() {
   installPkg syncthing
 }
 
-
+###############################################################################
 # main
 ###############################################################################
 
 main() {
   cd "${HOME}" || return 1
 
-  export ARCHITECTURE="$( dpkg --print-architecture )"
+  export ARCHITECTURE="$(dpkg --print-architecture)"
 
   # get the ubuntu codename
   source /etc/os-release
@@ -244,14 +286,20 @@ main() {
 
   installPkg "${MINIMUM_PACKAGES[@]}" "${PACKAGES[@]}"
   flatpakInstall "${FLATPAK_PACKAGES[@]}"
+
+  # DevOps tools
   installVSCode
   installDocker
   installKubectl
   installMinikube
   installGcloud
+  installAsdfvm
+  installHyperfine
+
+  # "regular user" stuff
   installSyncthing
   installBraveBrowser
+  installYtdl
 }
 
 [[ "$0" == "${BASH_SOURCE[0]}" ]] && main "$@"
-
