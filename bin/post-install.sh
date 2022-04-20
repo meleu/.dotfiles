@@ -8,7 +8,7 @@
 # meleu - https://meleu.dev/
 # shellcheck disable=2155,2164,1091
 #
-# TODO: install hyperfine
+# TODO: detect if I'm in "terminal only" interface
 
 MINIMUM_PACKAGES=(
   vim

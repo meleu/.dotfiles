@@ -152,8 +152,10 @@ transfer() {
 }
 
 
+# dud(): get the disk usage of a directory and its subdirs
 dud() {
-  du --max-depth 1 --human-readable "${@:-.}" | sort --human-numeric-sort
+  du --max-depth 1 --human-readable "${@:-.}" \
+    | sort --human-numeric-sort
 }
 
 
