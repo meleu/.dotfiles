@@ -20,9 +20,7 @@ shopt -s checkwinsize
 
 # History Options
 ###############################################################################
-# inspiration:
-# - https://gist.github.com/ckabalan/7d374ceea8c2d9dd237d763d385cf2aa
-# - https://linuxhint.com/bash_command_history_usage/
+# https://meleu.sh/bash-history/
 
 # HISTCONTROL options
 # ignorespace - eliminates commands that begin with a space history list.
