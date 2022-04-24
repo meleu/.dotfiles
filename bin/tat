@@ -1,0 +1,36 @@
+#!/bin/bash
+# tat
+#####
+# Launches tmux attaching to an existing session
+# named the same as the current directory (or
+# create a new one).
+# inspiration:
+# https://github.com/thoughtbot/dotfiles/blob/main/bin/tat
+
+notInTmux() {
+  [[ -z "${TMUX}" ]]
+}
+
+sessionExists() {
+  tmux has-session -t "=${sessionName}"
+}
+
+createDetachedSession() {
+  (TMUX='' tmux new-session -Ad -s "${sessionName}")
+}
+
+main() {
+  local path="$(tr . - <<< "${PWD##*/}")"
+  local sessionName="${1:-${path}}"
+
+  if notInTmux; then
+    tmux new-session -As "${sessionName}"
+  else
+    if ! sessionExists; then
+      createDetachedSession
+    fi
+    tmux switch-client -t "${sessionName}"
+  fi
+}
+
+main "$@"
