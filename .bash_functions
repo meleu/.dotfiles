@@ -183,11 +183,15 @@ getGithubLatestVersion() {
 # - pup: https://github.com/ericchiang/pup
 dolarhoje() {
   local currency="$1"
-  local htmlFile="$(mktemp)"
+  local htmlFile="${TMPDIR:-/tmp}/dolarhoje.html"
+
+  [[ "${currency}" == 'dolar' ]] && currency=
 
   curl --fail -sL "dolarhoje.com/${currency}" \
     | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
     && lynx -dump "${htmlFile}" \
     | sed 's/\(_\|hoje\)//g'
 }
+
+alias cotacao='dolarhoje'
 
