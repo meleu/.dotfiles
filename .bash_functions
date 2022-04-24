@@ -176,3 +176,17 @@ getGithubLatestVersion() {
     | jq -e --raw-output '.tag_name'
 }
 
+# dolarhoje():  gets, from dolarhoje.com, the dollar value
+#               compared with brazilian real
+# dependencies:
+# - lynx: sudo apt install lynx
+# - pup: https://github.com/ericchiang/pup
+dolarhoje() {
+  local currency="$1"
+  local htmlFile='/tmp/dolarhoje.html'
+
+  curl --fail -sL "dolarhoje.com/${currency}" \
+    | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
+    && lynx -dump "${htmlFile}" \
+    | sed 's/\(_\|hoje\)//g'
+}
