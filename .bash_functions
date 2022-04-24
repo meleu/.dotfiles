@@ -183,9 +183,13 @@ getGithubLatestVersion() {
 # - pup: https://github.com/ericchiang/pup
 dolarhoje() {
   local currency="$1"
-  local htmlFile="${TMPDIR:-/tmp}/dolarhoje.html"
+  local htmlFile
 
   [[ "${currency}" == 'dolar' ]] && currency=
+  htmlFile="${TMPDIR:-/tmp}/dolarhoje-${currency}.html"
+
+  # TODO: check if ${htmlFile} is older than 4 hours
+  # see: https://stackoverflow.com/a/2005658/6354514
 
   curl --fail -sL "dolarhoje.com/${currency}" \
     | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
