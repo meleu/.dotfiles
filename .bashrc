@@ -36,7 +36,8 @@ export HISTIGNORE='ls:ls -lah:history:pwd:htop:bg:fg:clear'
 export HISTTIMEFORMAT="%F %T$ "
 
 # append last command to the history right before next prompt
-export PROMPT_COMMAND+=( 'history -a' )
+[[ "${PROMPT_COMMAND[*]}" != *'history -a'* ]] \
+  && export PROMPT_COMMAND+=( 'history -a' )
 
 # history length - see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=10000
