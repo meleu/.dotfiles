@@ -184,17 +184,27 @@ getGithubLatestVersion() {
 dolarhoje() {
   local currency="$1"
   local htmlFile
+  local url
 
   [[ "${currency}" == 'dolar' ]] && currency=
-  htmlFile="${TMPDIR:-/tmp}/dolarhoje-${currency}.html"
+  htmlFile="${TMPDIR:-/tmp}/dolarhoje${currency}.html"
+  url="https://dolarhoje.com/${currency}"
 
-  # TODO: check if ${htmlFile} is older than 4 hours
+  # Check if ${htmlFile} is older than 4 hours
   # see: https://stackoverflow.com/a/2005658/6354514
+  touch -d '4 hours ago' /tmp/4h-ago
 
-  curl --fail -sL "dolarhoje.com/${currency}" \
-    | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
-    && lynx -dump "${htmlFile}" \
-    | sed 's/\(_\|hoje\)//g'
+  if [[ ! -e "${htmlFile}" || "${htmlFile}" -ot "/tmp/4h-ago" ]]; then
+    curl --fail -sL "${url}" \
+      | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
+      || {
+        echo "ERROR: unable to get data from ${url}" >&2
+        rm -f "${htmlFile}"
+        return 1
+      }
+  fi
+
+  lynx -dump "${htmlFile}" | sed 's/\(_\|hoje\)//g'
 }
 
 alias cotacao='dolarhoje'
