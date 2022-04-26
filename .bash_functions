@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # meleu's .bash_function
 ########################
 
@@ -38,6 +38,20 @@ warn() {
 }
 ###############################################################################
 
+dotfiles() (
+  local gitStatus
+
+  cd ~/dotfiles
+
+  gitStatus="$(git status --porcelain)"
+
+  [[ -z "${gitStatus}" ]] && return 0
+
+  git add --all \
+    && git commit -m "Automated sync: ${gitStatus}" \
+    && git pull --rebase \
+    && git push
+)
 
 # launch(): Open the file/URL with the default application.
 launch() {
