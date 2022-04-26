@@ -45,11 +45,12 @@ dotfiles() (
 
   cd ~/dotfiles
 
-git status
-
   gitStatus="$(git status --porcelain)"
 
-  [[ -z "${gitStatus}" ]] && return 0
+  if [[ -z "${gitStatus}" ]]; then
+    warn "dotfiles: nothing to update"
+    return 0
+  fi
 
   git add --all \
     && git status \
