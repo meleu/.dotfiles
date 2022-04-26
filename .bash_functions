@@ -45,6 +45,7 @@ dotfiles() (
 
   cd ~/dotfiles
 
+git status
 
   gitStatus="$(git status --porcelain)"
 
