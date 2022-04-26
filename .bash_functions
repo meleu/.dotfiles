@@ -38,10 +38,14 @@ warn() {
 }
 ###############################################################################
 
+# dotfiles(): update the dotfiles repo
 dotfiles() (
   local gitStatus
 
   cd ~/dotfiles
+
+  # just to please the user
+  git status
 
   gitStatus="$(git status --porcelain)"
 
