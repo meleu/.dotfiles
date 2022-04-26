@@ -75,19 +75,31 @@ umask 027
 
 # Prompt
 ###############################################################################
-PS1='\[\033[01;32m\]'   # green
-PS1+='\u@\h'            # user@host
-PS1+='\[\033[00m\]'     # no color
-PS1+=':['
-PS1+='\[\033[01;34m\]'  # blue
-PS1+='\w'               # working directory
-PS1+='\[\033[00m\]'     # no color
 # if in a git repository, shows the current branch
-PS1+='$(
+gitBranch() {
+  ret="$?"
   branch="$(git branch --show-current 2> /dev/null)" \
-    && echo " ($branch)"
-)'
-PS1+=']\n\$ '
+    && echo " [${branch}]"
+  return "${ret}"
+}
+#PS1='\[\033[01;32m\]'   # green
+#PS1+='\u@\h'            # user@host
+#PS1+='\[\033[00m\]'     # no color
+#PS1+=':['
+#PS1+='\[\033[01;34m\]'  # blue
+#PS1+='\w'               # working directory
+#PS1+='\[\033[00m\]'     # no color
+#PS1+='$(gitBranch)'
+#PS1+=']\n\$ '
+
+PS1=
+PS1+='\[\033[01;34m\]'  # blue
+PS1+='\w'
+PS1+='\[\033[00m\]'     # no color
+PS1+='$(gitBranch)'
+PS1+='$([[ $? -eq 0 ]] || echo "\[\033[01;31m\]")'
+PS1+='\n\$ '
+PS1+='\[\033[00m\]'     # no color
 
 
 # exercism.io

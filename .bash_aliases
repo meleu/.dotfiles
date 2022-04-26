@@ -24,7 +24,6 @@ alias setclip='xclip -selection c'
 
 
 # easier navigation
-###############################################################################
 alias ..='cd ..'
 alias ...='cd ../..'
 alias -- -='cd -'
@@ -32,16 +31,18 @@ alias cdgh='cd ~/src/github/'
 alias cdgl='cd ~/src/gitlab/'
 
 
-# from .bashrc template
-###############################################################################
 # Interactive operation...
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
+alias rm='rm -iv'
+alias cp='cp -iv'
+alias mv='mv -iv'
 
 # Default to human readable figures
 alias df='df -h'
 alias du='du -h'
+
+# "disk usage here": disk usage of current directory
+alias duh='du -cksh'
+
 
 # Misc :)
 alias less='less -r'                          # raw control characters
