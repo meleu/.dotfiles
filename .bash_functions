@@ -56,7 +56,7 @@ warn() {
 
   git add --all \
     && git status \
-    && git commit -m "Automated sync: ${gitStatus}" \
+    && git commit -m "update $(date +%Y-%m-%d %R): ${gitStatus}" \
     && git pull --rebase \
     && git push
 )
