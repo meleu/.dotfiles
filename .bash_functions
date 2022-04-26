@@ -39,10 +39,12 @@ warn() {
 ###############################################################################
 
 # dotfiles(): update the dotfiles repo
-# NOTE: the use of (parentheses) rather than {curly-brackets} is intentional.
-dotfiles() {
+# NOTE: the use of (parentheses) rather than {curly-brackets} is to prevent
+#       the need to cd back.
+dotfiles() (
   local gitStatus
 
+  # ALERT: hardcoded path!
   cd ~/dotfiles
 
   gitStatus="$(git status --porcelain)"
@@ -57,7 +59,7 @@ dotfiles() {
     && git commit -m "Automated sync: ${gitStatus}" \
     && git pull --rebase \
     && git push
-}
+)
 
 # launch(): Open the file/URL with the default application.
 launch() {
