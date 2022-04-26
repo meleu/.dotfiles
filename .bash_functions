@@ -38,10 +38,10 @@ warn() {
 }
 ###############################################################################
 
-# dotfiles(): update the dotfiles repo
+# .files(): update the dotfiles repo
 # NOTE: the use of (parentheses) rather than {curly-brackets} is to prevent
 #       the need to cd back.
-dotfiles() (
+.files() (
   local gitStatus
 
   # ALERT: hardcoded path!
