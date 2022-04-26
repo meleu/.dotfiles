@@ -40,7 +40,7 @@ warn() {
 
 # dotfiles(): update the dotfiles repo
 # NOTE: the use of (parentheses) rather than {curly-brackets} is intentional.
-dotfiles() (
+dotfiles() {
   local gitStatus
 
   cd ~/dotfiles
@@ -57,7 +57,7 @@ dotfiles() (
     && git commit -m "Automated sync: ${gitStatus}" \
     && git pull --rebase \
     && git push
-)
+}
 
 # launch(): Open the file/URL with the default application.
 launch() {
