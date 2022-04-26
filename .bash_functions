@@ -39,6 +39,7 @@ warn() {
 ###############################################################################
 
 # dotfiles(): update the dotfiles repo
+# NOTE: the use of (parentheses) rather than {curly-brackets} is intentional.
 dotfiles() (
   local gitStatus
 
