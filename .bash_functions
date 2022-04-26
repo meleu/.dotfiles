@@ -45,14 +45,13 @@ dotfiles() (
 
   cd ~/dotfiles
 
-  # just to please the user
-  git status
 
   gitStatus="$(git status --porcelain)"
 
   [[ -z "${gitStatus}" ]] && return 0
 
   git add --all \
+    && git status \
     && git commit -m "Automated sync: ${gitStatus}" \
     && git pull --rebase \
     && git push
