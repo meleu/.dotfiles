@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# urldecode
+###########
+# URL decode using pure bash.
+#
+# TODO: make it accept input from stdin
+#
+# inspiration:
+# https://github.com/dylanaraps/pure-bash-bible#decode-a-percent-encoded-string
+
+urldecode() {
+  local encoded="${*//+/ }"
+  printf '%b' "${encoded//%/\\x}"
+}
+
+urldecode "$@"
+

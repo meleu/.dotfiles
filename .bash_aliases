@@ -88,7 +88,7 @@ alias bat='batcat'
 
 # exa - https://the.exa.website/
 alias l='exa -F'
-alias ll='exa -l'
+alias ll='exa --long --group-directories-first'
 alias lla='exa -la'
 alias lsd='exa -D'  # list directories only
 

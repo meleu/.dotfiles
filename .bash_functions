@@ -39,32 +39,6 @@ warn() {
 ###############################################################################
 
 
-# urlencode(): URL encode using pure bash.
-urlencode() {
-  local LC_ALL=C
-  local string="$*"
-  local length="${#string}"
-  local char
-
-  for (( i = 0; i < length; i++ )); do
-    char="${string:i:1}"
-    if [[ "$char" == [a-zA-Z0-9.~_-] ]]; then
-      printf "$char" 
-    else
-      printf '%%%02X' "'$char" 
-    fi
-  done
-  printf '\n' # opcional
-}
-
-
-# urldecode(): URL decode using pure bash.
-urldecode() {
-  local encoded="${*//+/ }"
-  printf '%b' "${encoded//%/\\x}"
-}
-
-
 # launch(): Open the file/URL with the default application.
 launch() {
   local args="$@"
@@ -190,11 +164,12 @@ dolarhoje() {
   htmlFile="${TMPDIR:-/tmp}/dolarhoje${currency}.html"
   url="https://dolarhoje.com/${currency}"
 
-  # Check if ${htmlFile} is older than 4 hours
+  # Check if ${htmlFile} is older than 2 hours
   # see: https://stackoverflow.com/a/2005658/6354514
-  touch -d '4 hours ago' /tmp/4h-ago
+  touch -d '2 hours ago' /tmp/2h-ago
 
-  if [[ ! -e "${htmlFile}" || "${htmlFile}" -ot "/tmp/4h-ago" ]]; then
+  # if ${htmlFile} doesn't exist or is older than 2h, recreate it
+  if [[ ! -e "${htmlFile}" || "${htmlFile}" -ot "/tmp/2h-ago" ]]; then
     curl --fail -sL "${url}" \
       | pup 'div#cotacao' > "${htmlFile}" 2> /dev/null \
       || {

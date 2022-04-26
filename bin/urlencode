@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# urlencode
+###########
+# URL encode using pure bash.
+#
+# TODO: make it accept input from stdin
+#
+# Inspiration:
+# https://github.com/dylanaraps/pure-bash-bible#percent-encode-a-string
+
+
+urlencode() {
+  local LC_ALL=C
+  local string="$*"
+  local length="${#string}"
+  local char
+
+  for (( i = 0; i < length; i++ )); do
+    char="${string:i:1}"
+    if [[ "$char" == [a-zA-Z0-9.~_-] ]]; then
+      printf "$char" 
+    else
+      printf '%%%02X' "'$char" 
+    fi
+  done
+  printf '\n' # opcional
+}
+
+urlencode "$@"
+
