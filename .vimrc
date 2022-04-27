@@ -1,4 +1,22 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" my 'leader-keys'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>h :echo "Hello meleu"<cr>
+
+" use space as the leader key
+let mapleader = "\<Space>"
+
+" reload my vimrc
+nmap <leader>r :source $MYVIMRC<cr>
+
+" quickly open my .vimrc
+nmap <leader>vi :tabedit $MYVIMRC<cr>
+
+" copy the whole file
+map <leader>ca ggVG"*y
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cosmetic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " A colorscheme good for CLI and GUI
@@ -79,17 +97,37 @@ set ignorecase
 set smartcase
 
 " Use Ctrl+L to clear the highlighting of :set hlsearch
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
+map <C-n> <esc>:nohlsearch<cr>
+
+" if maparg('<C-L>', 'n') ==# ''
+"   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+" endif
 
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Misc...
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set autoread        " read from disk
+"set nobackup       " do not save the backup/swap files
 set history=1000
 set tabpagemax=50
+
+" when in a big soft-wrapped line, make j and k feel more 'natural'
+nmap k gk
+nmap j gj
+
+" ctrl-s to save (normal/insert mode)
+map <C-s> <esc>:w<cr>
+imap <C-s> <esc>:w<cr>
+
+" be aware of my typos
+command! Q q
+command! W w
+command! WQ wq
+
+" bind q to close the buffer for help files
+autocmd Filetype help nnoremap <buffer> q :q<cr>
 
 
 
