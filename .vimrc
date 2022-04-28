@@ -1,4 +1,45 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Install plugins with vim-plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" install vim-plug
+" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+call plug#begin()
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-commentary'
+call plug#end()
+
+" Make CtrlP use ag for listing the files
+" [FAIL] didn't work like I expected
+"let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
+"let g:ctrp_use_caching = 0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" hotkeys
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" ctrl-s to save (normal/insert mode)
+map <C-s> <esc>:w<cr>
+imap <C-s> <esc>:w<cr>
+
+" ctrl-o to save (normal/insert mode)
+map <C-o> <esc>:tabe .<cr>
+imap <C-o> <esc>:tabe .<cr>
+
+" ctrl-\ to toggle comments
+" depends on plugin tpope/vim-commentary
+vmap <C-\> gc
+nmap <C-\> gcc
+imap <C-\> gcc
+
+" Use Ctrl+n to clear the highlighting of :set hlsearch
+map <C-n> <esc>:nohlsearch<cr>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " my 'leader-keys'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>h :echo "Hello meleu"<cr>
@@ -96,13 +137,6 @@ set ignorecase
 " Ignore case-sensitiveness only when using lower case.
 set smartcase
 
-" Use Ctrl+L to clear the highlighting of :set hlsearch
-map <C-n> <esc>:nohlsearch<cr>
-
-" if maparg('<C-L>', 'n') ==# ''
-"   nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-" endif
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,10 +151,6 @@ set tabpagemax=50
 nmap k gk
 nmap j gj
 
-" ctrl-s to save (normal/insert mode)
-map <C-s> <esc>:w<cr>
-imap <C-s> <esc>:w<cr>
-
 " be aware of my typos
 command! Q q
 command! W w
@@ -133,4 +163,5 @@ autocmd Filetype help nnoremap <buffer> q :q<cr>
 
 " TODO: I'd like to make it 80 characters long only if in a .md file...
 "set textwidth=80
+
 

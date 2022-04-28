@@ -42,10 +42,10 @@ warn() {
 # NOTE: the use of (parentheses) rather than {curly-brackets} is to prevent
 #       the need to cd back.
 .files() (
+  local dotfilesDir="${HOME}/dotfiles"
   local gitStatus
 
-  # ALERT: hardcoded path!
-  cd ~/dotfiles
+  cd "${dotfilesDir}"
 
   gitStatus="$(git status --porcelain)"
 
