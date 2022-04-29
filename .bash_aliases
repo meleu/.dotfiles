@@ -87,6 +87,8 @@ alias gh="launch 'https://github.com/'"
 ###############################################################################
 alias bat='batcat'
 
+alias vim='nvim'
+
 # exa - https://the.exa.website/
 alias l='exa -F'
 alias ll='exa --long --group-directories-first'
