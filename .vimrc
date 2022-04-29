@@ -16,7 +16,6 @@ call plug#end()
 "let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 "let g:ctrp_use_caching = 0
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " hotkeys
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -51,7 +50,8 @@ let mapleader = "\<Space>"
 nmap <leader>r :source $MYVIMRC<cr>
 
 " quickly open my .vimrc
-nmap <leader>vi :tabedit $MYVIMRC<cr>
+" nmap <leader>vi :tabedit $MYVIMRC<cr>
+nmap <leader>vi :tabedit ~/.vimrc<cr>
 
 " copy the whole file
 map <leader>ca ggVG"*y
@@ -61,7 +61,7 @@ map <leader>ca ggVG"*y
 " Cosmetic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " A colorscheme good for CLI and GUI
-colorscheme evening
+" colorscheme evening
 
 " exibir régua
 set ruler
@@ -163,5 +163,4 @@ autocmd Filetype help nnoremap <buffer> q :q<cr>
 
 " TODO: I'd like to make it 80 characters long only if in a .md file...
 "set textwidth=80
-
 
