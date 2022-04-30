@@ -5,16 +5,47 @@
 " curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 "   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin()
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tpope/vim-surround'
+"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vimwiki/vimwiki'
+
+" needed to allow repetition with dot for surround, commentary, etc.
 Plug 'tpope/vim-repeat'
+
+" gs{text object} - Go Surround
+Plug 'tpope/vim-surround'
+
+" gc{text object} - Go Comment
 Plug 'tpope/vim-commentary'
+
+" cx - Copy & Exchange
+" cx{text object} and then repeat for another text object
+" cxx - for current line
+" X - for visual mode
+" cxc - to cancel the pending exchange
+Plug 'tommcdo/vim-exchange'
+
+" gr{text object} - Go Replace
+Plug 'inkarkat/vim-ReplaceWithRegister'
+
+" gs{text object} - Go Sort
+Plug 'christoomey/vim-sort-motion'
+
+" necessary for plugins that create custom text objects
+Plug 'kana/vim-textobj-user'
+
+" creates the 'i' indent text object
+" preceded with 'i': referst to an indented paragraph
+" preceded with 'a': refers to the whole indented block
+Plug 'kana/vim-textobj-indent'
+
+" creates the 'l' line text object
+" the only difference from the whole line is that this text object
+" ignores the preceding white spaces
+Plug 'kana/vim-textobj-line'
 call plug#end()
 
-" Make CtrlP use ag for listing the files
-" [FAIL] didn't work like I expected
-"let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
-"let g:ctrp_use_caching = 0
+let g:vimwiki_list = [{'path': '~/src/github/meleudotdev', 'syntax': 'markdown', 'ext': '.md'}]
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neovim specific configs
@@ -24,7 +55,7 @@ if has('nvim')
   set clipboard+=unnamedplus
 
   " https://neovim.io/doc/user/lua.html#lua-highlight
-  au TextYankPost * silent! lua vim.highlight.on_yank()
+  au TextYankPost * silent! lua vim.highlight.on_yank {timeout=500}
 endif
 
 
@@ -67,7 +98,7 @@ nmap <leader>r :source $MYVIMRC<cr>
 nmap <leader>vi :tabedit ~/.vimrc<cr>
 
 " copy the whole file
-map <leader>ca ggVG"*y
+map <leader>ca ggVGy
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -161,8 +192,11 @@ set history=1000
 set tabpagemax=50
 
 " when in a big soft-wrapped line, make j and k feel more 'natural'
-nmap k gk
-nmap j gj
+nmap k gkzz
+nmap j gjzz
+nmap G Gzz
+
+" big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line
 
 " be aware of my typos
 command! Q q
@@ -171,7 +205,6 @@ command! WQ wq
 
 " bind q to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<cr>
-
 
 
 " TODO: I'd like to make it 80 characters long only if in a .md file...
