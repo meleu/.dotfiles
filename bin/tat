@@ -6,6 +6,8 @@
 # create a new one).
 # inspiration:
 # https://github.com/thoughtbot/dotfiles/blob/main/bin/tat
+#
+# shellcheck disable=2155
 
 notInTmux() {
   [[ -z "${TMUX}" ]]

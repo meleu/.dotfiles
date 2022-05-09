@@ -45,7 +45,7 @@ warn() {
   local dotfilesDir="${HOME}/dotfiles"
   local gitStatus
 
-  cd "${dotfilesDir}"
+  cd "${dotfilesDir}" || return 1
 
   gitStatus="$(git status --porcelain)"
 
@@ -63,29 +63,25 @@ warn() {
 
 # launch(): Open the file/URL with the default application.
 launch() {
-  local args="$@"
-
   case "$OSTYPE" in
     "cygwin"*)
-      cygstart "$args"
+      cygstart "$@"
       ;;
     "darwin"*) # MacOS
-      open "$args"
+      open "$@"
       ;;
     *)
-      xdg-open "$args"
+      xdg-open "$@"
       ;;
   esac
 }
 
-
 # google(): Open google.com in the default browser, arguments are used as search terms.
 google() {
   local terms
-  terms="$(urlencode $@)"
+  terms="$(urlencode "$@")"
   launch "https://www.google.com/search?q=${terms}"
 }
-
 
 # 0x0(): Upload file or URL shortener. See more info at https://0x0.st/
 0x0() {
@@ -104,7 +100,6 @@ google() {
   curl -F"${curlArg}" https://0x0.st
 }
 
-
 # transfer(): upload file to https://transfer.sh
 transfer() {
   local url='https://transfer.sh'
@@ -118,7 +113,7 @@ transfer() {
 
   # usage
   if [ $# -eq 0 ]; then
-    echo -e "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>">&2
+    echo -e "No arguments specified.\nUsage:\n  transfer <file|directory>\n  ... | transfer <file_name>" >&2
     return 1
   fi
 
@@ -128,7 +123,7 @@ transfer() {
     file_name=$(basename "$file")
 
     if [ ! -e "$file" ]; then
-      echo "$file: No such file or directory">&2
+      echo "$file: No such file or directory" >&2
       return 1
     fi
 
@@ -144,16 +139,14 @@ transfer() {
     file_name=$1
     uploadFile
   fi
-  echo 
+  echo
 }
-
 
 # dud(): get the disk usage of a directory and its subdirs
 dud() {
   du --max-depth 1 --human-readable "${@:-.}" \
     | sort --human-numeric-sort
 }
-
 
 getGithubLatestVersion() {
   local repo="$1"
@@ -205,4 +198,3 @@ dolarhoje() {
 }
 
 alias cotacao='dolarhoje'
-

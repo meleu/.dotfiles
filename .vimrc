@@ -1,9 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Install plugins with vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" install vim-plug
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 call plug#begin()
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
@@ -11,7 +8,7 @@ Plug 'vimwiki/vimwiki'
 " needed to allow repetition with dot for surround, commentary, etc.
 Plug 'tpope/vim-repeat'
 
-" gs{text object} - Go Surround
+" {verb}s{text object} - eg: ds' = Delete Surrounding 'Quotes'
 Plug 'tpope/vim-surround'
 
 " gc{text object} - Go Comment
@@ -42,9 +39,38 @@ Plug 'kana/vim-textobj-indent'
 " the only difference from the whole line is that this text object
 " ignores the preceding white spaces
 Plug 'kana/vim-textobj-line'
+
+" format my shellscript code (required 'shfmt')
+Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+
+" trying to get shellcheck analysis while coding
+Plug 'vim-syntastic/syntastic'
+
+" useful for bash scripting
+" NOTE: interesting ideas, but I didn't actually like it.
+"Plug 'WolfgangMehner/bash-support'
+
 call plug#end()
 
+" plugins configs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" vimwiki
 let g:vimwiki_list = [{'path': '~/src/github/meleudotdev', 'syntax': 'markdown', 'ext': '.md'}]
+
+" vim-shfmt
+let g:shfmt_fmt_on_save = 1
+" 2 spaces, binary next line, space redirects, case indent
+let g:shfmt_extra_args = '-i 2 -bn -sr -ci'
+
+" Syntastic (for shellcheck)
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -78,15 +104,15 @@ vmap <C-\> gc
 nmap <C-\> gcc
 imap <C-\> gcc
 
-" Use Ctrl+n to clear the highlighting of :set hlsearch
-map <C-n> <esc>:nohlsearch<cr>
+" ctrl-space for autocompletion menu
+imap <C-Space> <C-n>
 
+" Use Ctrl+n to clear the highlighting of :set hlsearch
+"map <C-n> <esc>:nohlsearch<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " my 'leader-keys'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <leader>h :echo "Hello meleu"<cr>
-
 " use space as the leader key
 let mapleader = "\<Space>"
 
@@ -97,8 +123,15 @@ nmap <leader>r :source $MYVIMRC<cr>
 " nmap <leader>vi :tabedit $MYVIMRC<cr>
 nmap <leader>vi :tabedit ~/.vimrc<cr>
 
+" quickly open my .tmux.conf
+nmap <leader>tm :tabedit ~/.tmux.conf<cr>
+
 " copy the whole file
-map <leader>ca ggVGy
+map <leader>cf ggVGy
+
+" go to the next/previous error (useful for syntastic/shellcheck)
+map <leader>ne :lnext<cr>
+map <leader>pe :lprevious<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,7 +144,7 @@ map <leader>ca ggVGy
 set ruler
 
 " highlight the current line
-set cursorline
+" set cursorline
 
 " always show status line
 set laststatus=2
@@ -192,11 +225,13 @@ set history=1000
 set tabpagemax=50
 
 " when in a big soft-wrapped line, make j and k feel more 'natural'
-nmap k gkzz
-nmap j gjzz
-nmap G Gzz
+nmap k gk
+nmap j gj
+"nmap k gkzz " didn't the experience while browsing the :help
+"nmap j gjzz
 
-" big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line big big big big big big big big big big big big big big big line
+" try to keep the cursor in the middle of the screen (horizontally)
+nmap G Gzz
 
 " be aware of my typos
 command! Q q
