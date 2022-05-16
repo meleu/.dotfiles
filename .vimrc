@@ -63,6 +63,10 @@ let g:shfmt_fmt_on_save = 1
 " 2 spaces, binary next line, space redirects, case indent
 let g:shfmt_extra_args = '-i 2 -bn -sr -ci'
 
+" defining statusline before Syntastic customization
+" https://github.com/dahu/LearnVim/blob/master/doc/learnvim.txt
+set statusline=%f%m%r%h%w%=[%n:%Y]%=[%l,%v][%p%%\ of\ %L\ lines]
+
 " Syntastic (for shellcheck)
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -94,9 +98,9 @@ endif
 map <C-s> <esc>:w<cr>
 imap <C-s> <esc>:w<cr>
 
-" ctrl-o to save (normal/insert mode)
-map <C-o> <esc>:tabe .<cr>
-imap <C-o> <esc>:tabe .<cr>
+" ctrl-o to open a file
+"map <C-o> <esc>:tabe .<cr>gh
+"imap <C-o> <esc>:tabe .<cr>gh
 
 " ctrl-\ to toggle comments
 " depends on plugin tpope/vim-commentary
@@ -107,8 +111,8 @@ imap <C-\> gcc
 " ctrl-space for autocompletion menu
 imap <C-Space> <C-n>
 
-" Use Ctrl+n to clear the highlighting of :set hlsearch
-"map <C-n> <esc>:nohlsearch<cr>
+" Use Ctrl+l to clear the highlighting of :set hlsearch
+nnoremap <c-l> :nohl<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " my 'leader-keys'
@@ -116,10 +120,17 @@ imap <C-Space> <C-n>
 " use space as the leader key
 let mapleader = "\<Space>"
 
+" quick access to the 'official cheatsheet'
+nmap <leader>ch :help quickref<cr>
+
+" quickly search something in vim's help
+nmap <leader>k :help <c-r><c-w><cr>
+
 " reload my vimrc
 nmap <leader>r :source $MYVIMRC<cr>
 
 " quickly open my .vimrc
+" when using neovim, $MYVIMRC is the ~/.config/nvim/init.vim
 " nmap <leader>vi :tabedit $MYVIMRC<cr>
 nmap <leader>vi :tabedit ~/.vimrc<cr>
 
@@ -127,7 +138,7 @@ nmap <leader>vi :tabedit ~/.vimrc<cr>
 nmap <leader>tm :tabedit ~/.tmux.conf<cr>
 
 " copy the whole file
-map <leader>cf ggVGy
+map <leader>cf :%y<cr>
 
 " go to the next/previous error (useful for syntastic/shellcheck)
 map <leader>ne :lnext<cr>
@@ -135,12 +146,14 @@ map <leader>pe :lprevious<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Cosmetic
+" Options
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use :help option-list for aquick reference to all options.
+" Use :help 'option (including the ' character) to learn more about each one.
+
 " A colorscheme good for CLI and GUI
 " colorscheme evening
 
-" exibir régua
 set ruler
 
 " highlight the current line
@@ -149,9 +162,17 @@ set ruler
 " always show status line
 set laststatus=2
 
-" Syntax highlighting
-syntax on
+" Show commands in status bar
+set showcmd
 
+" When scrolling up or down, show at least 3 lines above/below
+set scrolloff=3
+
+" Use <F2> to toggle paste modes
+set pastetoggle=<f2>
+
+" Coding
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show the number of lines
 set number
 
@@ -159,34 +180,30 @@ set number
 " NOTE: not useful when pair programming
 "set relativenumber
 
-" Show commands in status bar
-set showcmd
+syntax on
 
 " When a bracket is typed, the cursor highlight the matching opening bracket.
 set showmatch
 
-" When scrolling up or down, show at least 3 lines above/below
-set scrolloff=3
-
-" From nerd-fonts:
-" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.ttf
-set guifont=Monospace\ 16
 " nice way to set the default font for GUI:
 " - `:set guifont=*` to open the dialog box to chose a font
 " - choose the font
 " - use `:set guifont?` to see the command to be used in the `.vimrc`
+set guifont=Monospace\ 16
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coding style (no tabs, 2 spaces indentation)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Auto indentation.
 set autoindent smartindent
 
-" Number of spaces to show when displaying a tab
-set tabstop=2
+" number of spaces to show when displaying a real <tab>
+set tabstop=8
 
-" Number of spaces for each step of the (auto)indent
+" number of spaces that <Tab> uses while editing
+set softtabstop=2
+
+" number of spaces for each step of the (auto)indent
 set shiftwidth=2
 
 " When pressing the tab, put spaces instead.
@@ -199,9 +216,8 @@ set expandtab
 set smarttab
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Searching...
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Searching
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Highlight the text being searched
 set hlsearch
 
@@ -213,6 +229,9 @@ set ignorecase
 
 " Ignore case-sensitiveness only when using lower case.
 set smartcase
+
+" do not loop through the file when doing a search
+"set nowrapscan
 
 
 
@@ -240,6 +259,8 @@ command! WQ wq
 
 " bind q to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<cr>
+
+
 
 
 " TODO: I'd like to make it 80 characters long only if in a .md file...
