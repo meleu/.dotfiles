@@ -1,6 +1,7 @@
 #!/bin/bash
 # meleu's .bashrc
 #################
+# shellcheck disable=1090,1091
 
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
@@ -33,14 +34,14 @@ shopt -s checkwinsize
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoreboth
 
 # ignore the following commands
-export HISTIGNORE='ls:ls -lah:history:pwd:htop:bg:fg:clear'
+export HISTIGNORE='ls:ls -lah:ll:history:pwd:htop:bg:fg:clear'
 
 # show a timestamp in the history command output
 export HISTTIMEFORMAT="%F %T$ "
 
 # append last command to the history right before next prompt
 [[ "${PROMPT_COMMAND[*]}" != *'history -a'* ]] \
-  && export PROMPT_COMMAND+=( 'history -a' )
+  && export PROMPT_COMMAND+=('history -a')
 
 # history length - see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=10000
@@ -52,20 +53,17 @@ shopt -s histappend
 # save all lines of a mult-line command in the same entry
 shopt -s cmdhist
 
-
 # Aliases
 ###############################################################################
 if [ -f "${HOME}/.bash_aliases" ]; then
   source "${HOME}/.bash_aliases"
 fi
 
-
 # Functions
 ###############################################################################
 if [ -f "${HOME}/.bash_functions" ]; then
   source "${HOME}/.bash_functions"
 fi
-
 
 # Umask
 ###############################################################################
@@ -74,7 +72,6 @@ fi
 umask 027
 # Paranoid: neither group nor others have any perms:
 # umask 077
-
 
 # Prompt
 ###############################################################################
@@ -85,6 +82,22 @@ gitBranch() {
     && echo " [${branch}]"
   return "${ret}"
 }
+
+# "minimalistic" version
+# /directory
+# $
+PS1=
+PS1+='\[\033[01;34m\]' # blue
+PS1+='\w'
+PS1+='\[\033[00m\]' # no color
+PS1+='$(gitBranch)'
+PS1+='$([[ $? -eq 0 ]] || echo "\[\033[01;31m\]")'
+PS1+='\n\$ '
+PS1+='\[\033[00m\]' # no color
+
+# user@host:[/directory (git-branch)]
+# $
+#PS1=
 #PS1='\[\033[01;32m\]'   # green
 #PS1+='\u@\h'            # user@host
 #PS1+='\[\033[00m\]'     # no color
@@ -95,16 +108,6 @@ gitBranch() {
 #PS1+='$(gitBranch)'
 #PS1+=']\n\$ '
 
-PS1=
-PS1+='\[\033[01;34m\]'  # blue
-PS1+='\w'
-PS1+='\[\033[00m\]'     # no color
-PS1+='$(gitBranch)'
-PS1+='$([[ $? -eq 0 ]] || echo "\[\033[01;31m\]")'
-PS1+='\n\$ '
-PS1+='\[\033[00m\]'     # no color
-
-
 # exercism.io
 ###############################################################################
 # bash completion
@@ -114,7 +117,6 @@ completionFile="${HOME}/.config/exercism/exercism_completion.bash"
 # always run all tests
 export BATS_RUN_SKIPPED=true
 
-
 # Instalacao das Funcoes ZZ (www.funcoeszz.net)
 ###############################################################################
 #export ZZOFF=""  # desligue funcoes indesejadas
@@ -122,9 +124,15 @@ export BATS_RUN_SKIPPED=true
 #export ZZDIR="/home/meleu/src/funcoeszz/zz"    # pasta zz/
 #source "$ZZPATH"
 
-
 # asdf version manager - https://asdf-vm.com
 ###############################################################################
 source "${HOME}/.asdf/asdf.sh"
 source "${HOME}/.asdf/completions/asdf.bash"
 
+# I think it's a Rust thing, not sure.
+source "$HOME/.cargo/env"
+
+# glab autocompletion
+# https://glab.readthedocs.io/
+###############################################################################
+source "${HOME}/.config/glab-cli/glab-completion.bash"

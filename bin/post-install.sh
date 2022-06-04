@@ -41,10 +41,6 @@ FLATPAK_PACKAGES=(
   com.bitwarden.desktop
 )
 
-readonly SRC_DIR="${HOME}/src"
-
-readonly SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-
 # functions for colorized output
 ###############################################################################
 
@@ -111,6 +107,7 @@ getGithubLatestVersion() {
 
 # functions to install software
 ###############################################################################
+# shellcheck disable=2016
 installAsdfvm() {
   isInstalled asdf && return
   echoGreen "\n--> installing asdf version manager..."
@@ -132,11 +129,11 @@ installAsdfvm() {
 installHyperfine() {
   isInstalled hyperfine && return
   echoGreen "\n--> installing hyperfine version manager..."
-  
+
   local repo='sharkdp/hyperfine'
   local latestVersion="$(getGithubLatestVersion "${repo}")"
   local debFile="hyperfine_${latestVersion#v}_${ARCHITECTURE}.deb"
-  
+
   # https://github.com/sharkdp/hyperfine/releases
   curl -LO "https://github.com/${repo}/releases/download/${latestVersion}/${debFile}"
   sudo dpkg -i "${debFile}"

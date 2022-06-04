@@ -50,6 +50,9 @@ Plug 'vim-syntastic/syntastic'
 " NOTE: interesting ideas, but I didn't actually like it.
 "Plug 'WolfgangMehner/bash-support'
 
+" using neovim inside my browser
+" 
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 call plug#end()
 
 " plugins configs
@@ -95,8 +98,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " ctrl-s to save (normal/insert mode)
-map <C-s> <esc>:w<cr>
-imap <C-s> <esc>:w<cr>
+" map <C-s> <esc>:w<cr>
+" imap <C-s> <esc>:w<cr>
 
 " ctrl-o to open a file
 "map <C-o> <esc>:tabe .<cr>gh
