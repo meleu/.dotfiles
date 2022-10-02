@@ -21,13 +21,12 @@ alias getclip='xclip -selection clipboard -o'
 # setclip ${file} - puts file contents in the clipboard
 # command | setclip - puts command's output in the clipboard
 alias setclip='xclip -selection c'
+###############################################################################
 
 # easier navigation
 alias ..='cd ..'
 alias ...='cd ../..'
 alias -- -='cd -'
-alias cdgh='cd ~/src/github/'
-alias cdgl='cd ~/src/gitlab/'
 
 # Interactive operation...
 alias rm='rm -iv'
@@ -41,7 +40,6 @@ alias du='du -h'
 # "disk usage here": disk usage of current directory
 alias duh='du -cksh'
 
-# Misc :)
 alias less='less -r'   # raw control characters
 alias whence='type -a' # where, of a sort
 alias grep='grep --color'
@@ -92,7 +90,12 @@ alias myip='curl -4 icanhazip.com'
 alias myip6='curl -6 icanhazip.com'
 
 # print each dir in PATH on a separate line
-alias path='echo -e "${PATH//:/\\n}"'
+alias path='echo -e "${PATH//:/\\n}" | sort'
+
+# Ruby/exercism.org stuff
+###############################################################################
+alias irb='irb --simple-prompt'
+alias rubyTry='ruby -I../lib -rdisable_skip *_test.rb'
 
 # GCP stuff
 ###############################################################################

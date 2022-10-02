@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # meleu's .bash_function
 ########################
+# shellcheck disable=1091
 
 # private stuff
 if [ -f "${HOME}/.bash_functions_private" ]; then
@@ -129,10 +130,11 @@ transfer() {
 
     # if it's a dir, create a zip
     if [ -d "$file" ]; then
+      # shellcheck disable=2288
       file_name="$file_name.zip" ,
       (cd "$file" && zip -r -q - .) | uploadFile
     else
-      cat "$file" | uploadFile
+      uploadFile < "${file}"
     fi
 
   else

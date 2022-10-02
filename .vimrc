@@ -2,6 +2,9 @@
 " Install plugins with vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
+" Emmet support
+Plug 'mattn/emmet-vim'
+
 "Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vimwiki/vimwiki'
 
@@ -52,7 +55,7 @@ Plug 'vim-syntastic/syntastic'
 
 " using neovim inside my browser
 " 
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+"Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 call plug#end()
 
 " plugins configs
@@ -142,6 +145,9 @@ nmap <leader>tm :tabedit ~/.tmux.conf<cr>
 
 " copy the whole file
 map <leader>cf :%y<cr>
+
+" indent the whole file
+map <leader>ic mpgg=G`p
 
 " go to the next/previous error (useful for syntastic/shellcheck)
 map <leader>ne :lnext<cr>

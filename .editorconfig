@@ -1,0 +1,17 @@
+# this config is used by the shfmt plugin
+# https://marketplace.visualstudio.com/items?itemName=mkhl.shfmt
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# see shfmt options here:
+# https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples
+[*.sh]
+indent_style = space
+indent_size = 2           # shfmt -i 2
+
+binary_next_line = true   # shfmt -bn
+space_redirects = true    # shfmt -sr
+switch_case_indent = true # shfmt -ci
+

@@ -172,12 +172,12 @@ installDocker() {
     "deb [arch=${ARCHITECTURE} signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu ${UBUNTU_CODENAME} stable" \
     | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-  installPkg docker-ce docker-ce-cli containerd.io
+  #installPkg docker-ce docker-ce-cli containerd.io
 
-  sudo groupadd docker || true
-  sudo usermod -aG docker "${USER}"
-  newgrp docker
-  docker version
+  #sudo groupadd docker || true
+  #sudo usermod -aG docker "${USER}"
+  #newgrp docker
+  #docker version
 }
 
 installKubectl() {
@@ -286,9 +286,9 @@ main() {
 
   # DevOps tools
   installVSCode
-  installDocker
+  installDocker # trying Docker Desktop
   installKubectl
-  installMinikube
+  #installMinikube # Docker Desktop comes with kubernetes?
   installGcloud
   installAsdfvm
   installHyperfine
