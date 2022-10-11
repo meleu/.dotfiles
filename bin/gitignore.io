@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 # gitignore.io
 ##############
-# Automatically generate a .gitignore file using the https://gitignore.io/ service.
+# Automatically generate a .gitignore file using the
+# https://gitignore.io/ service.
 #
 # Dependency: curl
 
-export GITIGNORE_TOOLS="${GITIGNORE_TOOLS:-vim,emacs,visualstudiocode,linux,windows,macos}"
+export GITIGNORE_TOOLS="vim,emacs,visualstudiocode,linux,windows,macos"
 
 usage() {
-  local cmd="${0##*/}"
+  local scriptName="${0##*/}"
+  cat <<- EoF
 
-  echo "Usage:"
-  echo "${cmd} list              # show all valid options for tools"
-  echo "${cmd}                   # generate a gitignore for the default tools"
-  echo "${cmd} tool1,tool2,toolN # generate a gitignore for specific tools"
-  echo "${cmd} help              # show this message"
+Usage:
+
+${scriptName} [tool1,tool2,toolN] # generate a .gitignore for specified tools
+${scriptName} list                # shows a list of available tools
+${scriptName} -h                  # shows this message
+
+When used without any arguments, generates a .gitignore for the default tools.
+
+List of default tools:
+${GITIGNORE_TOOLS}
+
+EoF
 }
 
 gitignoreio() {
@@ -24,10 +33,10 @@ gitignoreio() {
 }
 
 main() {
-  [[ $1 =~ ^(--help|-h|help)$ ]] && {
+  if [[ ${1,,} =~ ^(-h|--help|help)$ ]]; then
     usage
-    return 0
-  }
+    return
+  fi
 
   gitignoreio "$@"
   echo
