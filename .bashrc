@@ -1,7 +1,7 @@
 #!/bin/bash
 # meleu's .bashrc
 #################
-# shellcheck disable=1090,1091
+# shellcheck disable=1090,1091,2155
 
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
@@ -9,6 +9,8 @@
 # using neovim
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
+
+export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
 
 # Shell Options
 ###############################################################################

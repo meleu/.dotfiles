@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Install plugins with vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Just Plug them and then :PlugInstall
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 " Emmet support
 Plug 'mattn/emmet-vim'
@@ -49,9 +51,8 @@ Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
 " trying to get shellcheck analysis while coding
 Plug 'vim-syntastic/syntastic'
 
-" useful for bash scripting
-" NOTE: interesting ideas, but I didn't actually like it.
-"Plug 'WolfgangMehner/bash-support'
+" useful for Golang coding
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " using neovim inside my browser
 " 
@@ -68,6 +69,10 @@ let g:vimwiki_list = [{'path': '~/src/github/meleudotdev', 'syntax': 'markdown',
 let g:shfmt_fmt_on_save = 1
 " 2 spaces, binary next line, space redirects, case indent
 let g:shfmt_extra_args = '-i 2 -bn -sr -ci'
+
+" vim-go
+" format with goimports instead of gofmt
+let g:go_fmt_command = "goimports"
 
 " defining statusline before Syntastic customization
 " https://github.com/dahu/LearnVim/blob/master/doc/learnvim.txt
@@ -153,6 +158,8 @@ map <leader>ic mpgg=G`p
 map <leader>ne :lnext<cr>
 map <leader>pe :lprevious<cr>
 
+" run :GoTest
+map <leader>gt :GoTest<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Options
@@ -207,7 +214,7 @@ set guifont=Monospace\ 16
 set autoindent smartindent
 
 " number of spaces to show when displaying a real <tab>
-set tabstop=8
+set tabstop=2
 
 " number of spaces that <Tab> uses while editing
 set softtabstop=2
@@ -268,7 +275,6 @@ command! WQ wq
 
 " bind q to close the buffer for help files
 autocmd Filetype help nnoremap <buffer> q :q<cr>
-
 
 
 

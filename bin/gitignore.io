@@ -8,6 +8,22 @@
 
 export GITIGNORE_TOOLS="vim,emacs,visualstudiocode,linux,windows,macos"
 
+main() {
+  if [[ ${1,,} =~ ^(-h|--help|help)$ ]]; then
+    usage
+    return
+  fi
+
+  gitignoreio "$@"
+  echo
+}
+
+gitignoreio() {
+  local url="https://gitignore.io/api"
+  local tools="${1:-${GITIGNORE_TOOLS}}"
+  curl --location --silent "${url}/${tools}"
+}
+
 usage() {
   local scriptName="${0##*/}"
   cat <<- EoF
@@ -24,22 +40,6 @@ List of default tools:
 ${GITIGNORE_TOOLS}
 
 EoF
-}
-
-gitignoreio() {
-  local url="https://gitignore.io/api"
-  local tools="${1:-${GITIGNORE_TOOLS}}"
-  curl --location --silent "${url}/${tools}"
-}
-
-main() {
-  if [[ ${1,,} =~ ^(-h|--help|help)$ ]]; then
-    usage
-    return
-  fi
-
-  gitignoreio "$@"
-  echo
 }
 
 main "$@"
