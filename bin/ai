@@ -52,7 +52,7 @@ askOpenAI() {
   curl --silent "https://api.openai.com/v1/completions" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${OPENAI_TOKEN}" \
-    -d "{\"model\": \"text-davinci-003\", \"prompt\": \"${question}\", \"max_tokens\": 500}" \
+    -d "{\"model\": \"text-davinci-003\", \"prompt\": \"${question}\", \"temperature\": 0, \"max_tokens\": 500}" \
     | jq --exit-status --raw-output '.choices[].text'
 }
 
