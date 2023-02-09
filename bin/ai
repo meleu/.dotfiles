@@ -1,4 +1,26 @@
 #!/usr/bin/env bash
+# ai.sh
+#######
+#
+# Send your questions to the OpenAI API and get the answers,
+# directly from the comfort of your terminal.
+#
+# Instructions:
+# - Go to https://openai.com/api/ and create a token (I know
+#   you're smart enough to figure out how to do it)
+# - Whenever you place this script, create a '.env' file with this:
+# OPENAI_TOKEN=MySuperSecretToken
+#
+# Now you can ask questions directly from the command line!
+# Hypothetical example:
+# ```
+# $ ai "what's the meaning of life, universe and everything else?"
+# 🤖 -
+#
+# 42
+# ```
+#
+# meleu - feb/2023
 # shellcheck disable=2155,1091
 
 set -Eeo pipefail
@@ -20,8 +42,6 @@ main() {
   answer="$(askOpenAI "${question}")"
 
   echo -e "🤖 - \e[0;32m${answer}\e[0m\n\n"
-  # echo -n "🤖"
-  # lolcat <<< "${answer}"
 }
 
 # askOpenAI
