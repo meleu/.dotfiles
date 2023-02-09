@@ -73,7 +73,7 @@ urlencode() {
       printf '%%%02X' "'$char"
     fi
   done
-  printf '\n' # opcional
+  printf '\n'
 }
 
 #######################################################################
