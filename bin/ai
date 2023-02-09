@@ -25,7 +25,7 @@
 
 set -Eeo pipefail
 
-trap '[ERRO] ${BASH_SOURCE}:${FUNCNAME}:${LINENO}' ERR
+trap 'echo [ERRO] ${BASH_SOURCE}:${FUNCNAME}:${LINENO}' ERR
 
 export SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
