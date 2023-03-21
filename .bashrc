@@ -140,6 +140,10 @@ source "$HOME/.cargo/env"
 ###############################################################################
 source "${HOME}/.config/glab-cli/glab-completion.bash"
 
+# zellij autocompletion
+# https://zellij.dev/documentation/controlling-zellij-through-cli.html#completions
+source "${HOME}/.config/zellij/autocomplete.bash"
+
 # mount Google Drive & sync with unison
 ###############################################################################
 # Requirements:
@@ -166,3 +170,4 @@ source "${HOME}/.config/glab-cli/glab-completion.bash"
 # if 'kubectl' is present, enable autocompletion for bash
 command -v kubectl > /dev/null \
   && source <(kubectl completion bash)
+

@@ -9,18 +9,6 @@
 #
 # shellcheck disable=2155
 
-notInTmux() {
-  [[ -z "${TMUX}" ]]
-}
-
-sessionExists() {
-  tmux has-session -t "=${sessionName}"
-}
-
-createDetachedSession() {
-  (TMUX='' tmux new-session -Ad -s "${sessionName}")
-}
-
 main() {
   local path="$(tr . - <<< "${PWD##*/}")"
   local sessionName="${1:-${path}}"
@@ -34,5 +22,18 @@ main() {
     tmux switch-client -t "${sessionName}"
   fi
 }
+
+notInTmux() {
+  [[ -z "${TMUX}" ]]
+}
+
+sessionExists() {
+  tmux has-session -t "=${sessionName}"
+}
+
+createDetachedSession() {
+  (TMUX='' tmux new-session -Ad -s "${sessionName}")
+}
+
 
 main "$@"
