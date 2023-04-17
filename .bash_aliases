@@ -71,7 +71,11 @@ launch() {
 # links
 alias gmail="launch 'https://gmail.com/'"
 alias gist="launch 'https://gist.github.com/'"
-alias gh="launch 'https://github.com/'"
+
+# Ruby/exercism.org stuff
+###############################################################################
+alias irb='irb --simple-prompt'
+alias rubyTry='ruby -I../lib -rdisable_skip *_test.rb'
 
 # misc
 ###############################################################################
@@ -92,11 +96,11 @@ alias myip6='curl -6 icanhazip.com'
 # print each dir in PATH on a separate line
 alias path='echo -e "${PATH//:/\\n}" | sort'
 
-# Ruby/exercism.org stuff
-###############################################################################
-alias irb='irb --simple-prompt'
-alias rubyTry='ruby -I../lib -rdisable_skip *_test.rb'
-
 # GCP stuff
-###############################################################################
 alias gcpProject='gcloud config get-value project'
+
+# prevent typo
+alias chat='echo "You mean \"cheat\", right?"'
+
+# use vim with a bare minimum configuration
+alias vi='\vim -u ~/.essential.vim'

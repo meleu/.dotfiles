@@ -82,19 +82,18 @@ umask 027
 gitBranch() {
   ret="$?"
   branch="$(git branch --show-current 2> /dev/null)" \
-    && echo " [${branch}]"
+    && echo -n " [${branch}]"
   return "${ret}"
 }
 
-# "minimalistic" version
-# /directory
+# PS1 "minimalistic" version:
+# /current/directory [branch]
 # $
 PS1=
-PS1+='\[\033[01;34m\]' # blue
-PS1+='\w'
-PS1+='\[\033[00m\]' # no color
-PS1+='$(gitBranch)'
-PS1+='$([[ $? -eq 0 ]] || echo "\[\033[01;31m\]")'
+PS1+='\[\033[01;34m\]'                        # blue
+PS1+='\w'                                     # working dir
+PS1+='\[\033[00m\]'                           # no color
+PS1+='$(gitBranch || echo "\[\033[01;31m\]")' # red if last command failed
 PS1+='\n\$ '
 PS1+='\[\033[00m\]' # no color
 
@@ -170,4 +169,3 @@ source "${HOME}/.config/zellij/autocomplete.bash"
 # if 'kubectl' is present, enable autocompletion for bash
 command -v kubectl > /dev/null \
   && source <(kubectl completion bash)
-

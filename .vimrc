@@ -72,6 +72,12 @@ syntax on
 " - use `:set guifont?` to see the command to be used in the `.vimrc`
 set guifont=Monospace\ 16
 
+" removing bad LunarVim weird defaults
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" prevent l and h to go to the next/previous line
+set whichwrap=b,s
+
+set wrap
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key [re]maps
@@ -88,13 +94,13 @@ set guifont=Monospace\ 16
 " normal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " keeping cursor in the middle line
-nnoremap k gkzz
-nnoremap j gjzz
+" nnoremap k gkzz
+" nnoremap j gjzz
 nnoremap G Gzz
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap p pzz
-nnoremap P Pzz
+" nnoremap p pzz
+" nnoremap P Pzz
 nnoremap } }zz
 nnoremap { {zz
 
@@ -111,7 +117,7 @@ nmap <leader>rv :source $MYVIMRC<cr>
 nmap <leader>e :Lexplore 30<cr>
 
 " turn off hlsearch
-nmap <leader>hs :nohlsearch<cr>
+nmap <leader>h :nohlsearch<cr>
 
 " toggle relativenumber
 nmap <leader>rn :set relativenumber!<cr>
@@ -133,8 +139,8 @@ nmap <leader>tm :tabedit ~/.tmux.conf<cr>
 " visual
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " stay highlighted after indent
-vnoremap < <gv
-vnoremap > >gv
+"vnoremap < <gv
+"vnoremap > >gv
 
 " replace selection but don't overwrite the register
 vnoremap p "_dP
