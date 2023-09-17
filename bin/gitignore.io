@@ -6,7 +6,7 @@
 #
 # Dependency: curl
 
-export GITIGNORE_TOOLS="vim,emacs,visualstudiocode,linux,windows,macos"
+export GITIGNORE_TOOLS="vim,emacs,visualstudiocode,linux,windows,macos,dotenv"
 
 main() {
   if [[ ${1,,} =~ ^(-h|--help|help)$ ]]; then
