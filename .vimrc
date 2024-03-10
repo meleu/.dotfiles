@@ -1,16 +1,6 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neovim specific configs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('nvim')
-  " make the nvim talk with the system's clipboard
-  set clipboard+=unnamedplus
-
-  " https://neovim.io/doc/user/lua.html#lua-highlight
-  au TextYankPost * silent! lua vim.highlight.on_yank {timeout=500}
-endif
-
 " Set <Space> as the leaderkey
 let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -24,18 +14,21 @@ let mapleader = "\<Space>"
 set number
 set relativenumber
 set ruler
+set inccommand=split    " preview substitutions live, as you type
 set showcmd             " show command in status bar
 set colorcolumn=80,120  " highlight some meaningful columns
 set cursorline          " highlight the cursor line
-set scrolloff=8         " when scrolling up/down, show at least N lines
+set scrolloff=5         " when scrolling up/down, show at least N lines
 set showmatch           " highlight matching brackets while typing
 set linebreak           " avoid wrapping a line in the middle of a word
 set showtabline=2       " always show tabs on top of the screen
 set laststatus=2        " always show status line
+set mouse=a             " allow using the mouse
 
 " tab & indentation
 set autoindent
 set smartindent
+set breakindent
 set smarttab
 set expandtab           " output spaces when pressing <tab>
 set softtabstop=2       " N spaces to output when pressing <tab>
@@ -58,11 +51,9 @@ set splitright          " vertical splits go right
 
 " handling files
 set nobackup            " don't save backups (e.g.: file.txt~)
-set autoread            " read from disk
-set history=1000        " ???
-set tabpagemax=50       " ???
+set autoread            " read from disk when file changed outside vim
+set history=1000        " amount of Ex commands in history
 set undofile            " keeps undo history between sessions
-set undodir=~/.vim/undodir  " directory to save undo history
 
 syntax on
 
@@ -94,8 +85,8 @@ set wrap
 " normal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " keeping cursor in the middle line
-" nnoremap k gkzz
-" nnoremap j gjzz
+nnoremap k gk
+nnoremap j gj
 nnoremap G Gzz
 nnoremap n nzz
 nnoremap N Nzz
@@ -116,8 +107,8 @@ nmap <leader>rv :source $MYVIMRC<cr>
 " open the file explorer
 nmap <leader>e :Lexplore 30<cr>
 
-" turn off hlsearch
-nmap <leader>h :nohlsearch<cr>
+" toggle hlsearch
+nmap <leader>hs :set hlsearch!<cr>
 
 " toggle relativenumber
 nmap <leader>rn :set relativenumber!<cr>

@@ -10,7 +10,7 @@
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
-export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
+# export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
 
 # Shell Options
 ###############################################################################
