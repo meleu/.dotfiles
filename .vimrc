@@ -14,7 +14,6 @@ let maplocalleader = "\<Space>"
 set number
 set relativenumber
 set ruler
-set inccommand=split    " preview substitutions live, as you type
 set showcmd             " show command in status bar
 set colorcolumn=80,120  " highlight some meaningful columns
 set cursorline          " highlight the cursor line
@@ -61,7 +60,7 @@ syntax on
 " - `:set guifont=*` to open the dialog box to chose a font
 " - choose the font
 " - use `:set guifont?` to see the command to be used in the `.vimrc`
-set guifont=Monospace\ 16
+" set guifont=Monospace\ 16
 
 " removing bad LunarVim weird defaults
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -84,6 +83,13 @@ set wrap
 
 " normal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pure Vim (non-NeoVim) keymaps
+if !has('nvim')
+  " open the file explorer
+  nmap <leader>e :Lexplore 30<cr>
+  colorscheme desert
+endif
+
 " keeping cursor in the middle line
 nnoremap k gk
 nnoremap j gj
@@ -101,31 +107,34 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" reload my vimrc
-nmap <leader>rv :source $MYVIMRC<cr>
-
-" open the file explorer
-nmap <leader>e :Lexplore 30<cr>
-
 " toggle hlsearch
 nmap <leader>hs :set hlsearch!<cr>
 
 " toggle relativenumber
-nmap <leader>rn :set relativenumber!<cr>
+"nmap <leader>rn :set relativenumber!<cr>
+" it used to be '<leader>rn', but it was clashing with 'rename'
+nmap <leader>nr :set relativenumber!<cr>
 
 " shortcut to the quickref
 nmap <leader>qr :help quickref<cr>
-
-" quickly copy the whole file
-nmap <leader>cf :%yank<cr>
 
 " quickly open my .vimrc
 " NOTE: for neovim the $MYVIMRC is ~/.config/nvim/init.vim
 " nmap <leader>vi :tabedit $MYVIMRC<cr>
 nmap <leader>vi :tabedit ~/.vimrc<cr>
 
+" reload my vimrc
+" nmap <leader>rv :source $MYVIMRC<cr>
+nmap <leader>rv :source ~/.vimrc<cr>
+
 " quickly open my .tmux.conf
 nmap <leader>tm :tabedit ~/.tmux.conf<cr>
+
+" quickly open my .bashrc"
+nmap <leader>br :tabedit ~/.bashrc<cr>
+
+" quickly open my .zshrc"
+nmap <leader>zr :tabedit ~/.zshrc<cr>
 
 " visual
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -153,5 +162,5 @@ autocmd Filetype help nnoremap <buffer> q :q<cr>
 
 " templates
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:autocmd BufNewFile *.sh 0r ~/.vim/templates/bash.tpl
+":autocmd BufNewFile *.sh 0r ~/.vim/templates/bash.tpl
  
