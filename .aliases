@@ -1,0 +1,2 @@
+# gdf stands for "git dotfiles"
+alias gdf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
