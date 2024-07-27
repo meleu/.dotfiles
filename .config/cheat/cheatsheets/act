@@ -1,0 +1,12 @@
+# https://github.com/nektos/act
+# tool to run GitHub Actions locally
+
+# dryrun a job
+act -j $jobName -n
+
+
+# specify a file to load env variables from (default is '.env')
+act --env-file file.env
+
+# trigger with 'workflow_dispatch' event and a custom input
+act workflow_dispatch --input VARNAME=value

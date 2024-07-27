@@ -1,0 +1,10 @@
+# start colima to run docker containers
+colima start --runtime docker
+
+# start colima with kubernetes
+# example:
+colima start --kubernetes --cpu 2 --memory 4    
+
+# after starting with kubernetes, it keeps starting with it...
+# to disable kubernetes:
+docker start --kubernetes=false

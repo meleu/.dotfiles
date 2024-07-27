@@ -1,0 +1,42 @@
+# list rails tasks
+rails -T
+rails -T <term>
+
+# launch the server using specific environment configs
+rails server -e <environment>
+
+# having a better rails console
+bundle add pry-rails
+
+# install specific rails version
+gem install rails -v 5.2.0
+gem install rails --version 5.2.0
+
+# create new app (no ActiveStorage and no Action MailBox)
+rails new ${app_name} \
+  --skip-active-storage \
+  --skip-action-mailbox
+
+# quick way to return a hello-world JSON from routes.rb
+root to: ->(env) { [200, {'Content-Type' => 'application/json'}, [{ hello: 'world' }.to_json]] }
+
+# create a blog project
+######################################################################
+rails new blog
+cd blog
+
+rails generate model BlogPost title:string body:text
+
+# edit the migrations and/or the model to add default values or validations
+
+rails db:migrate
+
+rails console --sandbox # to play with the model
+# try:
+# post = BlogPost.new
+# post.valid?
+# post.errors.message
+
+rails generate controller BlogPosts
+
+

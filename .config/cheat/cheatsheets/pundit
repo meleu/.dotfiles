@@ -1,0 +1,50 @@
+---
+syntax: markdown
+tags: [ rails, ruby ]
+---
+
+# Pundit checklist
+
+> NOTE: it's recommended to start the project using pundit!
+
+## Starting
+
+- [ ] `bundle add pundit`
+- [ ] `rails generate pundit:install`
+- [ ] boilerplate to the `application_controller.rb`
+```ruby
+class ApplicationController < ActionController::Base
+  before_action :authenticate_user!
+  include Pundit::Authorization
+
+  # Pundit: allow-list approach
+  after_action :verify_authorized, except: :index, unless: :skip_pundit?
+  after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
+
+  # Uncomment when you *really understand* Pundit!
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(root_path)
+  end
+
+  private
+
+  def skip_pundit?
+    devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
+  end
+end
+```
+
+## For each Controller
+
+- [ ] `rails generate pundit:policy ModelName` (singular)
+- [ ] edit `app/policies/collective_policy.rb`
+    - [ ] show? (`true` if for everyone)
+    - [ ] new? / create? (`user.present?` if only for signed in users)
+    - [ ] edit? / update? / destroy? (more customized condition)
+    - [ ] the index is defined in the `Scope#resolve` (usually `scope.all`)
+- [ ] add `authorize @controller` in the controller's actions (probably except index)
+- [ ] `Controller#index` using `policy_scope(Controller)`
+- [ ] also use `policy(@controller).new?` (or other action) when you want to filter things in erb.
+

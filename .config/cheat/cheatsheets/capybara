@@ -1,0 +1,56 @@
+---
+syntax: ruby
+tags: [ rails, test, ruby ]
+---
+# link: https://github.com/teamcapybara/capybara#the-dsl
+# another cheatsheet: https://gist.github.com/tomas-stefano/6652111
+
+# NOTE: searches are case sensitive.
+
+# authorization
+##################################################
+# login as an user defined in the fixtures
+longin_as users(:user)
+
+
+# navigating
+##################################################
+# go to the page
+visit route_path
+
+# check if the page is the expected one
+expect(page).to have_current_path(post_comments_path(post))
+
+
+# clicking links and buttons
+##################################################
+
+click_on 'Link Text' # either links or buttons
+
+click_link 'id-of-link'
+click_link 'Link Text'
+click_button 'Save'
+click_on 'Button Value'
+
+# accept an alert
+accept_alert do
+  click_on "delete button", match: :first
+end
+
+# interacting with forms
+##################################################
+
+fill_in 'First Name', with: 'John'
+fill_in 'Password', with: 'Seekrit'
+fill_in 'Description', with: 'Really Long Text...'
+
+choose 'A Radio Button'
+
+check 'A Checkbox'
+uncheck 'A Checkbox'
+
+select 'Option', from: 'Select Box'
+
+attach_file 'Image', '/path/to/image.jpg'
+
+

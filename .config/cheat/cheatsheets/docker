@@ -1,0 +1,42 @@
+# a "complete" command to remember
+docker container run \
+  --rm \
+  -it \
+  -v $PWD:/workspace \
+  -p <host-port>:<container-port> \
+  --entrypoint /bin/bash \
+  <image-name>
+
+# launch a container getting environment variables from a file
+docker container run --env-file .env <image>
+
+# To start the docker daemon:
+docker container -d
+
+# To start a container with an interactive shell:
+docker container run -it <image> /bin/bash
+
+# To "shell" into a running container (docker-1.3+):
+docker container exec -it <container-name> bash
+
+# To inspect a running container:
+docker container inspect <container-id>
+
+# To get the process ID for a container:
+docker container inspect --format {{.State.Pid}} <container-name-or-id>
+
+# To list (and pretty-print) the current mounted volumes for a container:
+docker container inspect --format='{{json .Volumes}}' <container-id> | jq '.'
+
+# To copy files/folders between a container and your host:
+docker container cp foo.txt mycontainer:/foo.txt
+
+# To remove all stopped containers:
+docker container prune
+
+# To remove all volumes not used by at least one container:
+docker volume prune
+
+# To remove all untagged images:
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+

@@ -1,0 +1,4 @@
+heroku logs --tail
+
+heroku run db:seed
+

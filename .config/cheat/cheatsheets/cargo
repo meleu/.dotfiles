@@ -1,0 +1,16 @@
+# rust testing with cargo
+# https://doc.rust-lang.org/book/ch11-02-running-tests.html
+###########################################################
+
+# simple run
+cargo test
+
+# run *all* tests, including the ignored ones
+cargo test -- --include-ignored
+
+# run a specific test
+cargo test some_test
+
+# if the specific test is ignored...
+cargo test some_test -- --ignored
+

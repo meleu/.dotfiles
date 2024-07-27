@@ -1,0 +1,10 @@
+# cheatsheet for my own personal configs
+
+alt + left-click + drag = move window
+alt + right-click + drag = resize window
+
+# restart yabai to reload config
+yabai --restart-service
+
+# disable yabai
+??

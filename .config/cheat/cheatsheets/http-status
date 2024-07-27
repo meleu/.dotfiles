@@ -1,0 +1,52 @@
+# Responses are grouped in five classes
+######################################################################
+
+1. Informational responses (100 – 199)
+2. Successful responses (200 – 299)
+3. Redirection messages (300 – 399)
+4. Client error responses (400 – 499)
+5. Server error responses (500 – 599)
+
+# RFC 9110
+# https://httpwg.org/specs/rfc9110.html#overview.of.status.codes
+# Status Codes in Rails
+# https://guides.rubyonrails.org/layouts_and_rendering.html#the-status-option
+
+
+# 2xx - Successful responses
+######################################################################
+
+200 OK
+201 Created
+204 No Content
+
+
+# 4xx - Client error responses
+######################################################################
+
+400 Bad Request
+401 Unauthorized - it actually means "Unauthenticated"
+403 Forbidden - actually means "Authenticated but Permission Denied"
+404 Not Found
+405 Method Not Allowed
+422 Unprocessable Content
+429 Too Many Requests
+
+
+# 5xx - Server error responses
+######################################################################
+
+500 Internal Server Error
+501 Not Implemented
+502 Bad Gateway
+503 Service Unavailable - response should give a 'Retry-After' header
+
+
+
+# 3xx - Redirection messages
+######################################################################
+
+301 Moved Permanently - permanently moved to URL in 'Location' header
+302 Found - temporarily moved to URL in 'Location' header
+
+

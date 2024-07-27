@@ -1,0 +1,6 @@
+# get contents of secret
+gcloud secrets versions access latest \
+  --secret=secret_id \
+  --project=project-name
+
+
