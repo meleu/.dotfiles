@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+main() {
+	username="${1:-meleu}"
+	repo="${2:-.dotfiles}"
+	dotfilesDir="${HOME}/${repo}/"
+
+	git clone --bare "git@github.com:${username}/${repo}.git" "${dotfilesDir}"
+
+	gdf checkout || {
+		rm -rf "${dotfilesDir}"
+		exit 1
+	}
+	gdf config status.showUntrackedFiles no
+}
+
+# gdf stands for "git dotfiles"
+gdf() {
+	git --git-dir="${dotfilesDir}" --work-tree="$HOME" "$@"
+}
+
+main "$@"
