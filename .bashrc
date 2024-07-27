@@ -135,4 +135,11 @@ source "${HOME}/.asdf/completions/asdf.bash"
 command -v kubectl >/dev/null &&
 	source <(kubectl completion bash)
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+case "$OSTYPE" in
+"darwin"*) # MacOS
+	# TODO: adicionar path pro Homebrew
+	;;
+*) # Linux (hopefully)
+	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	;;
+esac
