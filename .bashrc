@@ -134,3 +134,5 @@ source "${HOME}/.asdf/completions/asdf.bash"
 # if 'kubectl' is present, enable autocompletion for bash
 command -v kubectl >/dev/null &&
 	source <(kubectl completion bash)
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
