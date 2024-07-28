@@ -1,4 +1,4 @@
-# this config is used by the shfmt plugin
+# this config is used by the shfmt VSCode plugin
 # https://marketplace.visualstudio.com/items?itemName=mkhl.shfmt
 
 [*]
