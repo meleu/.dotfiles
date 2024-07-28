@@ -107,34 +107,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" toggle hlsearch
-nmap <leader>hs :set hlsearch!<cr>
-
-" toggle relativenumber
-"nmap <leader>rn :set relativenumber!<cr>
-" it used to be '<leader>rn', but it was clashing with 'rename'
-nmap <leader>nr :set relativenumber!<cr>
-
-" shortcut to the quickref
-nmap <leader>qr :help quickref<cr>
-
 " quickly open my .vimrc
-" NOTE: for neovim the $MYVIMRC is ~/.config/nvim/init.vim
-" nmap <leader>vi :tabedit $MYVIMRC<cr>
-nmap <leader>vi :tabedit ~/.vimrc<cr>
-
-" reload my vimrc
-" nmap <leader>rv :source $MYVIMRC<cr>
-nmap <leader>rv :source ~/.vimrc<cr>
+nmap <leader>ccv :tabedit ~/.vimrc<cr>
 
 " quickly open my .tmux.conf
-nmap <leader>tm :tabedit ~/.tmux.conf<cr>
+nmap <leader>cct :tabedit ~/.tmux.conf<cr>
 
 " quickly open my .bashrc"
-nmap <leader>br :tabedit ~/.bashrc<cr>
+nmap <leader>ccb :tabedit ~/.bashrc<cr>
 
 " quickly open my .zshrc"
-nmap <leader>zr :tabedit ~/.zshrc<cr>
+nmap <leader>ccz :tabedit ~/.zshrc<cr>
 
 " visual
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
