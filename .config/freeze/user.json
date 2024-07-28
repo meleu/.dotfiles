@@ -1,0 +1,39 @@
+{
+  "background": "#171717",
+  "margin": [
+    20,
+    20,
+    20,
+    20
+  ],
+  "padding": [
+    20,
+    20,
+    20,
+    20
+  ],
+  "window": false,
+  "width": 0,
+  "height": 0,
+  "config": "default",
+  "language": "bash",
+  "theme": "catppuccin-mocha",
+  "border": {
+    "radius": 8,
+    "width": 0,
+    "color": "#515151"
+  },
+  "shadow": {
+    "blur": 0,
+    "x": 0,
+    "y": 0
+  },
+  "font": {
+    "family": "JetBrains Mono",
+    "file": "",
+    "size": 14,
+    "ligatures": false
+  },
+  "line_height": 1.2,
+  "line_numbers": false
+}
