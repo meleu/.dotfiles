@@ -15,7 +15,7 @@ set number
 set relativenumber
 set ruler
 set showcmd             " show command in status bar
-set colorcolumn=80,120  " highlight some meaningful columns
+set colorcolumn=80      " highlight some meaningful columns
 set cursorline          " highlight the cursor line
 set scrolloff=5         " when scrolling up/down, show at least N lines
 set showmatch           " highlight matching brackets while typing
