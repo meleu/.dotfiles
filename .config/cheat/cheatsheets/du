@@ -1,5 +1,0 @@
-# sort directories by size:
-du -d 1 -h | sort -h
-
-# To sort directories/files by size
-du -sh * | sort -h 
