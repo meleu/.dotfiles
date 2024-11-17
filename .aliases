@@ -5,15 +5,14 @@ if [ -f "${HOME}/.aliases_private" ]; then
 	source "${HOME}/.aliases_private"
 fi
 
+alias vim='nvim'
+
 # inspired by <https://www.atlassian.com/git/tutorials/dotfiles>
 # gdf stands for "git dotfiles"
 alias gdf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# prevent typo
+# prevent typo with `cheat`
 alias chat='echo "You mean \"cheat\", right?"'
-
-alias bat='batcat'
-alias vim='nvim'
 
 # allow aliases to be sudoed
 alias sudo='sudo '
@@ -73,15 +72,16 @@ alias ls='ls -hF --color=tty'
 
 # Ruby/exercism.org stuff
 ###############################################################################
-# TODO: check if irb is available
 alias irb='irb --simple-prompt'
 alias rubyTry='ruby -I../lib -rdisable_skip *_test.rb'
+###############################################################################
 
-# exa - https://the.exa.website/
-alias l='exa -F'
-alias ll='exa --long --group-directories-first'
-alias lla='exa -la'
-alias lsd='exa -D' # list directories only
+# eza - successor of exa
+alias eza='eza -F'
+alias l='eza'
+alias ll='eza -l --group-directories-first --sort extension'
+alias lla='ll -a'
+alias lsd='eza -D' # list directories only
 
 # show my IP address that is going to the internet
 alias myip='curl -4 icanhazip.com'
@@ -92,3 +92,6 @@ alias gcpProject='gcloud config get-value project'
 
 # use vim with a bare minimum configuration
 alias vi='\vim -u ~/.essential.vim'
+
+# always use docker compose plugin instead of standalone docker-compose
+alias docker-compose='docker compose'

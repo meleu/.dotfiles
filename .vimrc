@@ -12,7 +12,7 @@ let maplocalleader = "\<Space>"
 
 " visual hints
 set number
-set relativenumber
+set norelativenumber
 set ruler
 set showcmd             " show command in status bar
 set colorcolumn=80      " highlight some meaningful columns

@@ -68,7 +68,8 @@ cheatpaths:
   # If you have personalized cheatsheets, list them last. They will take
   # precedence over the more global cheatsheets.
   - name: personal
-    path: /home/meleu/.config/cheat/cheatsheets
+    # path: /home/meleu/.config/cheat/cheatsheets
+    path: /home/meleu/src/github/cheatsheets
     tags: [personal]
     readonly: false
 

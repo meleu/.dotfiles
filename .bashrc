@@ -3,6 +3,8 @@
 #################
 # shellcheck disable=1090,1091,2155
 
+export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
+
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
@@ -119,10 +121,11 @@ completionFile="${HOME}/.config/exercism/exercism_completion.bash"
 # always run all tests
 export BATS_RUN_SKIPPED=true
 
-# asdf version manager - https://asdf-vm.com
-###############################################################################
-source "${HOME}/.asdf/asdf.sh"
-source "${HOME}/.asdf/completions/asdf.bash"
+# # asdf version manager - https://asdf-vm.com
+# # I'm replacing this with 'mise en place' https://mise.jdx.dev
+# ###############################################################################
+# source "${HOME}/.asdf/asdf.sh"
+# source "${HOME}/.asdf/completions/asdf.bash"
 
 # glab autocompletion
 # https://glab.readthedocs.io/
@@ -140,6 +143,9 @@ case "$OSTYPE" in
 	# TODO: adicionar path pro Homebrew
 	;;
 *) # Linux (hopefully)
+	# Homebrew config
 	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	# using mise en place
+	eval "$(/home/linuxbrew/.linuxbrew/bin/mise activate bash)"
 	;;
 esac
