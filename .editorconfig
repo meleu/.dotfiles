@@ -4,12 +4,11 @@
 [*]
 end_of_line = lf
 insert_final_newline = true
+indent_style = space
 
 # see shfmt options here:
 # https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples
-[*.sh]
-indent_style = space
-
+[[shell]]
 # shfmt -i 2
 indent_size = 2
 

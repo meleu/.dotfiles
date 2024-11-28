@@ -2,10 +2,11 @@
 
 # load private aliases
 if [ -f "${HOME}/.aliases_private" ]; then
-	source "${HOME}/.aliases_private"
+  . "${HOME}/.aliases_private"
 fi
 
 alias vim='nvim'
+alias bat='batcat'
 
 # inspired by <https://www.atlassian.com/git/tutorials/dotfiles>
 # gdf stands for "git dotfiles"
@@ -24,14 +25,14 @@ alias sudo='sudo '
 
 : "${OSTYPE:=$(uname -s)}"
 case "$OSTYPE" in
-"darwin"*) # MacOS
-	alias getclip='pbcopy'
-	alias setclip='pbpaste'
-	;;
-*) # Linux (hopefully)
-	alias getclip='xclip -selection clipboard -o'
-	alias setclip='xclip -selection c'
-	;;
+  "darwin"*) # MacOS
+    alias getclip='pbcopy'
+    alias setclip='pbpaste'
+    ;;
+  *) # Linux (hopefully)
+    alias getclip='xclip -selection clipboard -o'
+    alias setclip='xclip -selection c'
+    ;;
 esac
 
 ###############################################################################
