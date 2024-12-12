@@ -88,11 +88,23 @@ if !has('nvim')
   " open the file explorer
   nmap <leader>e :Lexplore 30<cr>
   colorscheme desert
+
+  " copy file path to the clipboard
+  " " relative path
+  " :let @+ = expand("%")
+  nmap <leader>yf :let @+ = expand("%")<cr>
+  " " full path
+  " :let @+ = expand("%:p")
+  nmap <leader>yF :let @+ = expand("%:p")<cr>
+  " " just filename
+  " :let @+ = expand("%:t")
 endif
 
-" keeping cursor in the middle line
+" more intuitive behavior when a line is wrapped
 nnoremap k gk
 nnoremap j gj
+
+" keeping cursor in the middle line
 nnoremap G Gzz
 nnoremap n nzz
 nnoremap N Nzz
@@ -107,17 +119,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" quickly open my .vimrc
-nmap <leader>ccv :tabedit ~/.vimrc<cr>
+" " quickly open my .vimrc
+" nmap <leader>fcv :edit ~/.vimrc<cr>
 
-" quickly open my .tmux.conf
-nmap <leader>cct :tabedit ~/.tmux.conf<cr>
+" " quickly open my .tmux.conf
+" nmap <leader>fct :edit ~/.tmux.conf<cr>
 
-" quickly open my .bashrc"
-nmap <leader>ccb :tabedit ~/.bashrc<cr>
+" " quickly open my .bashrc"
+" nmap <leader>fcb :edit ~/.bashrc<cr>
 
-" quickly open my .zshrc"
-nmap <leader>ccz :tabedit ~/.zshrc<cr>
+" " quickly open my .zshrc"
+" nmap <leader>fcz :edit ~/.zshrc<cr>
 
 " visual
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
