@@ -1,95 +1,145 @@
+tap "browsh-org/browsh"
 tap "charmbracelet/tap"
 tap "danielgtaylor/restish"
+tap "gromgit/brewtils"
+tap "hashicorp/tap"
 tap "homebrew/bundle"
-# Official Amazon AWS command-line interface
+tap "keidarcy/tap"
+tap "rwx-cloud/tap"
+tap "rwx-research/tap"
+tap "sst/tap"
+tap "thezoraiz/ascii-image-converter"
+tap "valkyrie00/bbrew"
+brew "act"
+brew "argocd"
 brew "awscli"
-# Simple testing library for bash scripts
 brew "bashunit"
-# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Bash Automated Testing System
 brew "bats-core"
-# Create and view interactive cheat sheets for *nix commands
+brew "fontconfig"
+brew "chafa"
+brew "chawan"
 brew "cheat"
-# Modern, maintained replacement for ls
+brew "difftastic"
+brew "docker-credential-helper-ecr"
+brew "eget"
+brew "exercism"
 brew "eza"
-# Simple, fast and user-friendly alternative to find
+brew "fastly"
 brew "fd"
-# GNU compiler collection
 brew "gcc"
-# Play, record, convert, and stream audio and video
-brew "ffmpeg"
-# Command-line fuzzy finder written in Go
+brew "fswatch"
+brew "fx"
 brew "fzf"
-# GitHub command-line tool
 brew "gh"
-# Syntax-highlighting pager for git and diff output
 brew "git-delta"
-# Open-source GitLab command-line tool
+brew "git-who"
+brew "gitlab-ci-local"
 brew "glab"
-# Render markdown on the CLI
 brew "glow"
-# Tool for glamorous shell scripts
+brew "graphviz"
 brew "gum"
-# Uses CSS selectors to extract bits content from HTML files
+brew "helm"
 brew "htmlq"
-# Tools and libraries to manipulate images in many formats
-brew "imagemagick"
-# Lightweight and flexible command-line JSON processor
+brew "hugo"
+brew "hyperfine"
 brew "jq"
-# Lazier way to manage everything docker
+brew "ijq"
+brew "imagemagick"
+brew "isync"
+brew "jless"
+brew "kubernetes-cli"
+brew "kubectx"
 brew "lazydocker"
-# Simple terminal UI for git commands
 brew "lazygit"
-# Package manager for the Lua programming language
+brew "libpq"
 brew "luarocks"
-# Polyglot runtime manager (asdf rust clone)
+brew "mandown"
+brew "minikube"
 brew "mise"
-# MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
-# Ambitious Vim-fork focused on extensibility and agility
+brew "msmtp"
+brew "neomutt"
 brew "neovim"
-# No Nonsense Neovim Client in Rust
 brew "neovide"
-# Generate clients, server & docs from an OpenAPI spec (v2, v3)
-brew "openapi-generator"
-# PDF rendering library (based on the xpdf-3.0 code base)
-brew "poppler"
-# Search tool like grep and The Silver Searcher
+brew "oha"
 brew "ripgrep"
-# 7-Zip is a file archiver with a high compression ratio
+brew "opencode"
+brew "opentofu"
+brew "pass"
+brew "poppler"
+brew "pup"
+brew "restish"
 brew "sevenzip"
-# Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
-# Autoformat shell script source code
-brew "shfmt"
-# SQL linter and auto-formatter for Humans
 brew "sqlfluff"
-# Terminal multiplexer
+brew "terraform"
 brew "tmux"
-# Execute commands when watched files change
+brew "tree-sitter-cli"
+brew "universal-ctags"
+brew "vhs"
 brew "watchexec"
-# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
-# Shell extension to navigate your filesystem faster
+brew "yq"
+brew "yt-dlp"
 brew "zoxide"
-# UNIX shell (command interpreter)
 brew "zsh"
-# AI on the command line
+brew "browsh-org/browsh/browsh"
+brew "charmbracelet/tap/freeze"
 brew "charmbracelet/tap/mods"
-# Restish is a CLI for interacting with REST-ish HTTP APIs with some nice features built-in.
-brew "danielgtaylor/restish/restish"
+brew "gromgit/brewtils/taproom"
+brew "keidarcy/tap/e1s"
+brew "rwx-research/tap/abq"
+brew "thezoraiz/ascii-image-converter/ascii-image-converter"
+vscode "anthropic.claude-code"
 vscode "asvetliakov.vscode-neovim"
 vscode "catppuccin.catppuccin-vsc"
 vscode "catppuccin.catppuccin-vsc-icons"
+vscode "connorshea.vscode-ruby-test-adapter"
+vscode "docker.docker"
 vscode "dorzey.vscode-sqlfluff"
 vscode "editorconfig.editorconfig"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "gitlab.gitlab-workflow"
+vscode "hashicorp.terraform"
+vscode "hbenl.vscode-test-explorer"
+vscode "huanamigo.tokyo-night-ultra"
 vscode "karunamurti.haml"
 vscode "manuelpuyol.erb-linter"
+vscode "marp-team.marp-vscode"
 vscode "mkhl.shfmt"
+vscode "ms-azuretools.vscode-containers"
 vscode "ms-azuretools.vscode-docker"
 vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode.live-server"
 vscode "ms-vscode.makefile-tools"
+vscode "ms-vscode.test-adapter-converter"
+vscode "redhat.vscode-yaml"
+vscode "ryanluker.vscode-coverage-gutters"
 vscode "shopify.ruby-lsp"
+vscode "sqlfluff.vscode-sqlfluff"
 vscode "timonwong.shellcheck"
+vscode "tonsky.theme-alabaster"
 vscode "vscodevim.vim"
+go "github.com/kisielk/errcheck"
+go "cmd/go"
+go "golang.org/x/tools/cmd/godoc"
+go "cmd/gofmt"
+go "github.com/gokatas/gokatas"
+go "github.com/bitfield/gotestdox/cmd/gotestdox"
+go "github.com/evilmartians/lefthook/v2"
+go "golang.org/x/pkgsite/cmd/pkgsite"
+cargo "himalaya"
+flatpak "com.brave.Browser"
+flatpak "com.calibre_ebook.calibre"
+flatpak "com.discordapp.Discord"
+flatpak "com.github.hluk.copyq"
+flatpak "com.slack.Slack"
+flatpak "com.spotify.Client"
+flatpak "io.ente.auth"
+flatpak "md.obsidian.Obsidian"
+flatpak "net.ankiweb.Anki"
+flatpak "org.chromium.Chromium"
+flatpak "org.flameshot.Flameshot"
+flatpak "org.tigervnc.vncviewer"

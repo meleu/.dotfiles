@@ -1,0 +1,23 @@
+#!/bin/sh
+# shellcheck disable=1091
+
+# private stuff
+if [ -f "${HOME}/.functions_private" ]; then
+  . "${HOME}/.functions_private"
+fi
+
+port() {
+  # netstat \
+  #   --tcp \
+  #   --udp \
+  #   --numeric \
+  #   --listening
+  netstat -tunl \
+    | grep -q ":$1 " \
+    && echo "$1 is in use" \
+    || echo "$1 is free"
+}
+
+cursor() {
+  /usr/local/bin/cursor "$@" > /dev/null 2>&1 &
+}
