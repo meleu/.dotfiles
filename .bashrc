@@ -1,7 +1,17 @@
 #!/bin/bash
 # meleu's .bashrc
 #################
-# shellcheck disable=1090,1091,2155
+# shellcheck disable=1090,1091,1094,2155
+
+# DEBUGGING!
+#######################################################################
+# If not running interactively, don't do anything
+# [[ "$-" != *i* ]] && return
+# set -x
+# source "${HOME}/.local/share/blesh/ble.sh" --noattach
+# [[ ! ${BLE_VERSION-} ]] || ble-attach
+# return
+#######################################################################
 
 export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
@@ -32,7 +42,7 @@ shopt -s checkwinsize
 # https://meleu.sh/bash-history/
 
 # HISTCONTROL options
-# ignorespace - eliminates commands that begin with a space history list.
+# ignorespace - eliminates commands that begin with a space from history list.
 # ignoredups - eliminate duplicate commands (from the current session)
 # ignoreboth - Enable both ignoredups and ignorespace
 # erasedups - eliminate duplicates from the whole list (I don't use it)
@@ -45,8 +55,8 @@ export HISTIGNORE='ls:ls -lah:ll:history:pwd:htop:bg:fg:clear'
 export HISTTIMEFORMAT="%F %T$ "
 
 # append last command to the history right before next prompt
-[[ "${PROMPT_COMMAND[*]}" != *'history -a'* ]] &&
-	export PROMPT_COMMAND+=('history -a')
+[[ "${PROMPT_COMMAND[*]}" != *'history -a'* ]] \
+  && export PROMPT_COMMAND+=('history -a')
 
 # history length - see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=10000
@@ -60,15 +70,12 @@ shopt -s cmdhist
 
 # Aliases
 ###############################################################################
-if [ -f "${HOME}/.aliases" ]; then
-	source "${HOME}/.aliases"
-fi
+[[ -f "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 
 # Functions
 ###############################################################################
-if [ -f "${HOME}/.bash_functions" ]; then
-	source "${HOME}/.bash_functions"
-fi
+[[ -f "${HOME}/.bash_functions" ]] && source "${HOME}/.bash_functions"
+[[ -f "${HOME}/.functions" ]] && source "${HOME}/.functions"
 
 # Umask
 ###############################################################################
@@ -82,35 +89,36 @@ umask 027
 ###############################################################################
 # if in a git repository, shows the current branch
 gitBranch() {
-	ret="$?"
-	branch="$(git branch --show-current 2>/dev/null)" &&
-		echo -n " [${branch}]"
-	return "${ret}"
+  ret="$?"
+  branch="$(git branch --show-current 2> /dev/null)" && echo -n " [${branch}]"
+  return "${ret}"
 }
 
-# PS1 "minimalistic" version:
-# /current/directory [branch]
-# $
-PS1=
-PS1+='\[\033[01;34m\]'                        # blue
-PS1+='\w'                                     # working dir
-PS1+='\[\033[00m\]'                           # no color
-PS1+='$(gitBranch || echo "\[\033[01;31m\]")' # red if last command failed
-PS1+='\n\$ '
-PS1+='\[\033[00m\]' # no color
-
-# user@host:[/directory (git-branch)]
-# $
-#PS1=
-#PS1='\[\033[01;32m\]'   # green
-#PS1+='\u@\h'            # user@host
-#PS1+='\[\033[00m\]'     # no color
-#PS1+=':['
-#PS1+='\[\033[01;34m\]'  # blue
-#PS1+='\w'               # working directory
-#PS1+='\[\033[00m\]'     # no color
-#PS1+='$(gitBranch)'
-#PS1+=']\n\$ '
+if [[ $USER == meleu ]]; then
+  # PS1 "minimalistic" version:
+  # /current/directory [branch]
+  # $
+  PS1='\n'
+  PS1+='\[\033[01;34m\]'                        # blue
+  PS1+='\w'                                     # working dir
+  PS1+='\[\033[00m\]'                           # no color
+  PS1+='$(gitBranch || echo "\[\033[01;31m\]")' # red if last command failed
+  PS1+='\n\$ '
+  PS1+='\[\033[00m\]' # no color
+else
+  # I want this inside my devcontainers (where username != meleu)
+  # user@host:[/directory (git-branch)]
+  # $
+  PS1=
+  PS1='\[\033[01;32m\]' # green
+  PS1+='\u@\h'          # user@host
+  PS1+='\[\033[00m\]'   # no color
+  PS1+=':'
+  PS1+='\[\033[01;34m\]' # blue
+  PS1+='\w'              # working directory
+  PS1+='\[\033[00m\]'    # no color
+  PS1+='$(gitBranch)\n\$ '
+fi
 
 # exercism.io
 ###############################################################################
@@ -119,7 +127,7 @@ completionFile="${HOME}/.config/exercism/exercism_completion.bash"
 [[ -f "${completionFile}" ]] && source "${completionFile}"
 
 # always run all tests
-export BATS_RUN_SKIPPED=true
+# export BATS_RUN_SKIPPED=true
 
 # # asdf version manager - https://asdf-vm.com
 # # I'm replacing this with 'mise en place' https://mise.jdx.dev
@@ -135,17 +143,42 @@ export BATS_RUN_SKIPPED=true
 # kubectl autocompletion
 ###############################################################################
 # if 'kubectl' is present, enable autocompletion for bash
-command -v kubectl >/dev/null &&
-	source <(kubectl completion bash)
+command -v kubectl > /dev/null \
+  && source <(kubectl completion bash)
 
 case "$OSTYPE" in
-"darwin"*) # MacOS
-	# TODO: adicionar path pro Homebrew
-	;;
-*) # Linux (hopefully)
-	# Homebrew config
-	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-	# using mise en place
-	eval "$(/home/linuxbrew/.linuxbrew/bin/mise activate bash)"
-	;;
+  "darwin"*) # MacOS
+    # TODO: adicionar path pro Homebrew
+    ;;
+  *) # Linux (hopefully)
+    # Homebrew config
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv 2> /dev/null)"
+    # using mise-en-place: https://mise.jdx.dev/
+    eval "$(/home/linuxbrew/.linuxbrew/bin/mise activate bash 2> /dev/null)"
+    export MISE_NODE_COREPACK=true
+    ;;
 esac
+
+# fzf
+eval "$(fzf --bash 2> /dev/null)"
+
+# zoxide - smarter cd command
+# https://github.com/ajeetdsouze/zoxide
+eval "$(zoxide init bash 2> /dev/null)"
+
+# trying ble.sh
+# https://github.com/akinomyoga/ble.sh
+source "${HOME}/.local/share/blesh/ble.sh" --noattach 2> /dev/null
+[[ ! ${BLE_VERSION-} ]] || ble-attach
+
+# cheat: enable autocompletion
+# export CHEAT_USE_FZF=true
+# source "${HOME}/.config/cheat/cheat-completion.bash"
+
+# added by `terraform -install-autocomplete`
+complete -C /home/linuxbrew/.linuxbrew/Cellar/terraform/1.12.2/bin/terraform terraform
+
+# use psql from Homebrew
+if [[ -d /home/linuxbrew/.linuxbrew/opt/libpq/bin ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
+fi

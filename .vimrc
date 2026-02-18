@@ -2,6 +2,26 @@
 let mapleader = "\<Space>"
 let maplocalleader = "\<Space>"
 
+" Pure Vim (non-NeoVim) keymaps
+if !has('nvim')
+  " open the file explorer
+  nmap <leader>e :Lexplore 30<cr>
+  colorscheme desert
+
+  " fzf: the line below is from a message that appeared after installing fzf
+  " set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
+
+  " copy file path to the clipboard
+  " " relative path
+  " :let @+ = expand("%")
+  nmap <leader>fy :let @+ = expand("%")<cr>
+  " " full path
+  " :let @+ = expand("%:p")
+  nmap <leader>Fy :let @+ = expand("%:p")<cr>
+  " " just filename
+  " :let @+ = expand("%:t")
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " options
@@ -15,7 +35,7 @@ set number
 set norelativenumber
 set ruler
 set showcmd             " show command in status bar
-set colorcolumn=80      " highlight some meaningful columns
+set colorcolumn=80,120  " highlight some meaningful columns
 set cursorline          " highlight the cursor line
 set scrolloff=5         " when scrolling up/down, show at least N lines
 set showmatch           " highlight matching brackets while typing
@@ -31,7 +51,7 @@ set breakindent
 set smarttab
 set expandtab           " output spaces when pressing <tab>
 set softtabstop=2       " N spaces to output when pressing <tab>
-set tabstop=2           " N spaces to show a real <tab>
+set tabstop=4           " N spaces to show a real <tab>
 set shiftwidth=2        " N spaces for each level of indentation
 
 " searching
@@ -42,7 +62,7 @@ set ignorecase          " ignore case-sensitiveness...
 set smartcase           " ... unless there's a capital letter
 
 " edit
-set pastetoggle=<f2>    " use <F2> to toggle paste mode
+" set pastetoggle=<f2>    " use <F2> to toggle paste mode
 
 " handling windows/tabs/buffers
 set splitbelow          " horizontal splits go below
@@ -50,9 +70,18 @@ set splitright          " vertical splits go right
 
 " handling files
 set nobackup            " don't save backups (e.g.: file.txt~)
-set autoread            " read from disk when file changed outside vim
 set history=1000        " amount of Ex commands in history
 set undofile            " keeps undo history between sessions
+
+" reload file when changed outside vim
+" https://www.reddit.com/r/neovim/comments/f0qx2y
+set autoread
+" autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime
+" chek if the current mode is not the command-line mode (`mode() != 'c'`). If this condition is true, it executes the `checktime` command. The `checktime` command checks if the file has been modified outside of Vim and reloads it if necessary.
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" notification after file change
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 syntax on
 
@@ -83,23 +112,6 @@ set wrap
 
 " normal
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pure Vim (non-NeoVim) keymaps
-if !has('nvim')
-  " open the file explorer
-  nmap <leader>e :Lexplore 30<cr>
-  colorscheme desert
-
-  " copy file path to the clipboard
-  " " relative path
-  " :let @+ = expand("%")
-  nmap <leader>yf :let @+ = expand("%")<cr>
-  " " full path
-  " :let @+ = expand("%:p")
-  nmap <leader>yF :let @+ = expand("%:p")<cr>
-  " " just filename
-  " :let @+ = expand("%:t")
-endif
-
 " more intuitive behavior when a line is wrapped
 nnoremap k gk
 nnoremap j gj

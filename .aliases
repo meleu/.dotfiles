@@ -6,7 +6,16 @@ if [ -f "${HOME}/.aliases_private" ]; then
 fi
 
 alias vim='nvim'
-alias bat='batcat'
+
+# use vim with a bare minimum configuration
+alias vi='nvim --clean'
+
+alias n='vi ~/notes.md'
+
+# neovide
+alias v='neovide --frame none'
+
+alias dls='docker container ls'
 
 # inspired by <https://www.atlassian.com/git/tutorials/dotfiles>
 # gdf stands for "git dotfiles"
@@ -40,6 +49,7 @@ esac
 # easier navigation
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 alias -- -='cd -'
 
 # Interactive operation...
@@ -71,28 +81,20 @@ alias ls='ls -hF --color=tty'
 # NOTE: this doesn't work as expected in zsh
 # alias path='echo -e "${PATH//:/\\n}" | sort'
 
-# Ruby/exercism.org stuff
-###############################################################################
-alias irb='irb --simple-prompt'
-alias rubyTry='ruby -I../lib -rdisable_skip *_test.rb'
-###############################################################################
-
-# eza - successor of exa
+# eza - successor of exa ('ls' replacement)
 alias eza='eza -F'
-alias l='eza'
-alias ll='eza -l --group-directories-first --sort extension'
+alias l='eza --color=always --long --git --no-filesize --icons=always --no-time --no-user --no-permissions --group-directories-first --sort extension'
+alias lt='l --tree'
+alias ll='eza --long --group-directories-first --sort extension'
 alias lla='ll -a'
 alias lsd='eza -D' # list directories only
 
 # show my IP address that is going to the internet
-alias myip='curl -4 icanhazip.com'
-alias myip6='curl -6 icanhazip.com'
+alias myip='curl -s4 icanhazip.com'
+alias myip6='curl -s6 icanhazip.com'
 
 # GCP stuff
-alias gcpProject='gcloud config get-value project'
-
-# use vim with a bare minimum configuration
-alias vi='nvim --clean'
+# alias gcpProject='gcloud config get-value project'
 
 # always use docker compose plugin instead of standalone docker-compose
 alias docker-compose='docker compose'
@@ -102,3 +104,36 @@ alias lgit='lazygit'
 
 # lazydocker is a cool TUI for docker stats
 alias ldocker='lazydocker'
+
+# https://github.com/firecow/gitlab-ci-local
+alias glci='gitlab-ci-local'
+
+# sync current branch with main
+alias mergemain='git checkout main && git pull && git checkout - && git pull && git merge main'
+
+# update kitty:
+# https://sw.kovidgoyal.net/kitty/binary/
+alias kitty-update='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin'
+
+# shell gpt custom roles
+# https://github.com/TheR1D/shell_gpt?tab=readme-ov-file#roles
+# alias sgptgit='sgpt --role git-master'
+# alias sgptrb='sgpt --role ruby-master'
+# alias sgptdocker='sgpt --role docker-master'
+# alias sgptbash='sgpt --role bash-master'
+# alias sgptaws='sgpt --role aws-master'
+# alias sgptjq='sgpt --role jq-master'
+# alias sgptglab='sgpt --role gitlab-ci-master'
+#
+# trying mods instead of Shell GPT
+alias ai=mods
+alias ai-sh='mods --role shell'
+alias ai-aws='mods --role aws'
+alias ai-bash='mods --role bash'
+alias ai-docker='mods --role docker'
+alias ai-git='mods --role git'
+alias ai-glab='mods --role gitlab'
+alias ai-jq='mods --role jq'
+alias ai-rb='mods --role ruby'
+alias ai-go='mods --role golang'
+alias ai-net='mods --role networking'
