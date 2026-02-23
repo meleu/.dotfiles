@@ -1,7 +1,3 @@
-# private configs
-[include]
-  path = ~/.gitconfig_private
-
 #######################################################################
 # diff pager config
 #######################################################################
@@ -24,4 +20,33 @@
 [alias]
   difft = "!git -c diff.external='difft --display inline' diff --ext-diff"
   showt = "!git -c diff.external='difft --display inline' show --ext-diff"
+
+#######################################################################
+# provider specific configs
+#######################################################################
+# github projects
+#######################################################################
+[includeIf "gitdir:~/src/github/**"]
+  path = ~/src/github/gitconfig
+
+# dotfiles
+[includeIf "gitdir:~/.dotfiles/**"]
+  path = ~/src/github/gitconfig
+
+# LazyVim-config
+[includeIf "gitdir:~/.config/nvim/**"]
+  path = ~/src/github/gitconfig
+
+# GitLab projects
+#######################################################################
+[includeIf "gitdir:~/src/gitlab/**"]
+  path = ~/src/gitlab/gitconfig
+[pull]
+  rebase = true
+
+#######################################################################
+# private configs
+#######################################################################
+[include]
+  path = ~/.gitconfig_private
 

@@ -1,0 +1,6 @@
+[user]
+  email = meleu1@noreply.gitlab.com
+  name = "meleu1"
+[core]
+  sshCommand = "ssh -i ~/.ssh/id_ed25519-meleu1@gitlab.com"
+
