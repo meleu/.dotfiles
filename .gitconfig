@@ -1,0 +1,27 @@
+# private configs
+[include]
+  path = ~/.gitconfig_private
+
+#######################################################################
+# diff pager config
+#######################################################################
+[core]
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true # usar n/N para ir/voltar entre diff sections
+  line-numbers = true
+
+[merge]
+  conflictstyle = diff3
+
+; [diff]
+;   colorMoved = default
+
+[alias]
+  difft = "!git -c diff.external='difft --display inline' diff --ext-diff"
+  showt = "!git -c diff.external='difft --display inline' show --ext-diff"
+
