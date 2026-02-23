@@ -26,6 +26,9 @@ brew "fd"
 brew "gcc"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+
+brew "gawk"
+
 # GitHub command-line tool
 brew "gh"
 # Syntax-highlighting pager for git and diff output
