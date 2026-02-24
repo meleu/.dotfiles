@@ -6,6 +6,9 @@ brew "argocd"
 brew "awscli"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+
+brew "btop"
+
 # XML-based font configuration API for X Windows
 brew "fontconfig"
 # Versatile and fast Unicode/ASCII/ANSI graphics renderer
