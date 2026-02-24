@@ -115,25 +115,15 @@ alias mergemain='git checkout main && git pull && git checkout - && git pull && 
 # https://sw.kovidgoyal.net/kitty/binary/
 alias kitty-update='curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin'
 
-# shell gpt custom roles
-# https://github.com/TheR1D/shell_gpt?tab=readme-ov-file#roles
-# alias sgptgit='sgpt --role git-master'
-# alias sgptrb='sgpt --role ruby-master'
-# alias sgptdocker='sgpt --role docker-master'
-# alias sgptbash='sgpt --role bash-master'
-# alias sgptaws='sgpt --role aws-master'
-# alias sgptjq='sgpt --role jq-master'
-# alias sgptglab='sgpt --role gitlab-ci-master'
-#
-# trying mods instead of Shell GPT
-alias ai=mods
-alias ai-sh='mods --role shell'
-alias ai-aws='mods --role aws'
-alias ai-bash='mods --role bash'
-alias ai-docker='mods --role docker'
-alias ai-git='mods --role git'
-alias ai-glab='mods --role gitlab'
-alias ai-jq='mods --role jq'
-alias ai-rb='mods --role ruby'
-alias ai-go='mods --role golang'
-alias ai-net='mods --role networking'
+# NOTE: this was previously simpler, using charmbracelet/mods
+# I reconfigured to use Claude Code because I don't have API keys anymore.
+alias ai-sh='ai --system-prompt-file ~/.config/ai-roles/shell.md'
+alias ai-aws='ai --system-prompt-file ~/.config/ai-roles/aws.md'
+alias ai-bash='ai --system-prompt-file ~/.config/ai-roles/bash.md'
+alias ai-docker='ai --system-prompt-file ~/.config/ai-roles/docker.md'
+alias ai-git='ai --system-prompt-file ~/.config/ai-roles/git.md'
+alias ai-glab='ai --system-prompt-file ~/.config/ai-roles/gitlab.md'
+alias ai-jq='ai --system-prompt-file ~/.config/ai-roles/jq.md'
+alias ai-rb='ai --system-prompt-file ~/.config/ai-roles/ruby.md'
+alias ai-go='ai --system-prompt-file ~/.config/ai-roles/golang.md'
+alias ai-net='ai --system-prompt-file ~/.config/ai-roles/networking.md'
