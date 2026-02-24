@@ -3,16 +3,6 @@
 #################
 # shellcheck disable=1090,1091,1094,2155
 
-# DEBUGGING!
-#######################################################################
-# If not running interactively, don't do anything
-# [[ "$-" != *i* ]] && return
-# set -x
-# source "${HOME}/.local/share/blesh/ble.sh" --noattach
-# [[ ! ${BLE_VERSION-} ]] || ble-attach
-# return
-#######################################################################
-
 export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
 # If not running interactively, don't do anything
@@ -22,7 +12,8 @@ export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
-# export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
+# using bat as manpager (shows some colors that can improve readability)
+export MANPAGER='sh -c "col --no-backspaces --spaces | bat --plain --language man"'
 
 # Shell Options
 ###############################################################################
@@ -182,3 +173,6 @@ complete -C /home/linuxbrew/.linuxbrew/Cellar/terraform/1.12.2/bin/terraform ter
 if [[ -d /home/linuxbrew/.linuxbrew/opt/libpq/bin ]]; then
   export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
 fi
+
+# remove duplications from the PATH
+export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
