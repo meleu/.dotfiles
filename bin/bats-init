@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+trap trap_error ERR
+
+main() {
+  is_git_repo
+
+  mkdir -p test
+
+  install_bats_repos
+  create_makefile
+  create_hello_test
+  create_hello
+
+  make test
+
+  echo "done!"
+}
+
+install_bats_repos() {
+  # bats-core: o bats propriamente dito (útil para usarmos em pipelines)
+  echo -e "\n---> installing bats-core... <---"
+  git submodule add \
+    https://github.com/bats-core/bats-core.git \
+    test/bats
+
+  # bats-assert: responsável pelas asserções
+  echo -e "\n---> installing bats-assert... <---"
+  git submodule add \
+    https://github.com/bats-core/bats-assert.git \
+    test/test_helper/bats-assert
+
+  # bats-support: responsável por mensagems de falha mais amigáveis
+  echo -e "\n---> installing bats-support... <---"
+  git submodule add \
+    https://github.com/bats-core/bats-support.git \
+    test/test_helper/bats-support
+}
+
+create_makefile() {
+  cat << '_EoF_' > Makefile
+.PHONY: test
+
+test:
+	@if command -v parallel >/dev/null 2>&1; then \
+		bats --jobs $$(nproc) test; \
+	else \
+		bats test; \
+	fi
+_EoF_
+}
+
+create_hello_test() {
+  cat << '_EoF_' > test/hello_test.bats
+#!/usr/bin/env bats
+
+setup() {
+  load 'test_helper/bats-support/load'
+  load 'test_helper/bats-assert/load'
+
+  source "${BATS_TEST_DIRNAME}/../hello"
+}
+
+@test "say 'Hello, World!'" {
+  run hello
+  assert_output "Hello, World!"
+}
+_EoF_
+}
+
+create_hello() {
+  cat << '_EoF_' > hello
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+trap 'echo "[ERROR]: ${BASH_SOURCE}:${FUNCNAME}:${LINENO}"' ERR
+
+hello() {
+  echo "Hello, World!"
+}
+
+[[ "${BASH_SOURCE[0]}" != "$0" ]] && return
+hello "$@"
+_EoF_
+}
+
+is_git_repo() {
+  git rev-parse --is-inside-work-tree > /dev/null
+}
+
+trap_error() {
+  echo -e \
+    "ERROR: ${BASH_SOURCE[0]}:${BASH_LINENO[0]} in \`${FUNCNAME[1]}\`:" \
+    "\n$BASH_COMMAND" >&2
+}
+
+main "$@"
