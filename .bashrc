@@ -8,6 +8,9 @@ export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
+# load bash-completion
+source /usr/share/bash-completion/bash_completion
+
 # using neovim
 export EDITOR='nvim'
 export VISUAL="$EDITOR"
@@ -96,6 +99,11 @@ if [[ $USER == meleu ]]; then
   PS1+='$(gitBranch || echo "\[\033[01;31m\]")' # red if last command failed
   PS1+='\n\$ '
   PS1+='\[\033[00m\]' # no color
+
+  # Here's an even more minimalistic prompt,
+  # which is just the dollar sign, printed in red if last command failed
+  # PS1='\n\[\033[01;31m\]\$ \[\033[00m\]'
+
 else
   # I want this inside my devcontainers (where username != meleu)
   # user@host:[/directory (git-branch)]
@@ -119,12 +127,6 @@ completionFile="${HOME}/.config/exercism/exercism_completion.bash"
 
 # always run all tests
 # export BATS_RUN_SKIPPED=true
-
-# # asdf version manager - https://asdf-vm.com
-# # I'm replacing this with 'mise en place' https://mise.jdx.dev
-# ###############################################################################
-# source "${HOME}/.asdf/asdf.sh"
-# source "${HOME}/.asdf/completions/asdf.bash"
 
 # glab autocompletion
 # https://glab.readthedocs.io/
@@ -176,3 +178,12 @@ fi
 
 # remove duplications from the PATH
 export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
+
+# if kubectx is installed, create a custom KUBECONFIG variable
+list_kubeconfig() {
+  local -r kubeconfig_files=(~/.kube/*.yml ~/.kube/*.yaml)
+  local IFS=':'
+  echo "${kubeconfig_files[*]}"
+}
+
+export KUBECONFIG="$(list_kubeconfig)"

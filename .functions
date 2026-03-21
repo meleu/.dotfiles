@@ -7,17 +7,26 @@ if [ -f "${HOME}/.functions_private" ]; then
 fi
 
 port() {
+  local -r port_number="${1:?port number is required as first argument}"
   # netstat \
   #   --tcp \
   #   --udp \
   #   --numeric \
   #   --listening
-  netstat -tunl \
-    | grep -q ":$1 " \
+  netstat -tunl | grep -q ":$1 " \
     && echo "$1 is in use" \
     || echo "$1 is free"
 }
 
-cursor() {
-  /usr/local/bin/cursor "$@" > /dev/null 2>&1 &
+# print the validity interval of a given certificate
+cert_validity() {
+  openssl x509 -noout -dates -in "$@"
+}
+
+cert_get() {
+  local -r host="${1:?First argument must be a hostname}"
+  local -r port="${2:-443}"
+
+  openssl s_client -showcerts -connect "${host}:${port}" < /dev/null 2> /dev/null \
+    | openssl x509 -outform PEM
 }
