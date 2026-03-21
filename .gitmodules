@@ -1,0 +1,9 @@
+[submodule "/home/meleu/bin/test/bats"]
+	path = /home/meleu/bin/test/bats
+	url = https://github.com/bats-core/bats-core.git
+[submodule "/home/meleu/bin/test/test_helper/bats-assert"]
+	path = /home/meleu/bin/test/test_helper/bats-assert
+	url = https://github.com/bats-core/bats-assert.git
+[submodule "/home/meleu/bin/test/test_helper/bats-support"]
+	path = /home/meleu/bin/test/test_helper/bats-support
+	url = https://github.com/bats-core/bats-support.git
