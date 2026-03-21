@@ -1,4 +1,10 @@
 #######################################################################
+# private configs
+#######################################################################
+[include]
+  path = ~/.gitconfig_private
+
+#######################################################################
 # diff pager config
 #######################################################################
 [core]
@@ -18,6 +24,7 @@
 ;   colorMoved = default
 
 [alias]
+  # using diffstatic, a viewer that omits pure cosmetic changes
   difft = "!git -c diff.external='difft --display inline' diff --ext-diff"
   showt = "!git -c diff.external='difft --display inline' show --ext-diff"
 
@@ -44,9 +51,7 @@
 [pull]
   rebase = true
 
-#######################################################################
-# private configs
-#######################################################################
-[include]
-  path = ~/.gitconfig_private
-
+[init]
+	defaultBranch = main
+[credential]
+	helper = cache --timeout=86400
