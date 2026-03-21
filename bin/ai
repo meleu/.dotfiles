@@ -11,7 +11,8 @@
 # --tools "" - disables all tools (no file reading, no agentic loops, etc.)
 # --print - non-interactive, exits after one response
 
-claude \
+gum spin --spinner=points --title=Thinking... -- \
+  claude \
   --permission-mode dontAsk \
   --max-turns 1 \
   --tools "" \
