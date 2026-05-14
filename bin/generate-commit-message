@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-claude \
-  --permission-mode dontAsk \
-  --max-turns 1 \
-  --tools "" \
-  --print \
-  --system-prompt-file ~/.config/ai-roles/committer.md \
-  "Generate commit message, my changes: $(git diff --staged)"
+git diff --staged \
+  | claude \
+    --permission-mode dontAsk \
+    --max-turns 1 \
+    --tools "" \
+    --print \
+    --system-prompt-file ~/.config/ai-roles/committer.md \
+    "Generate commit message, my changes:"

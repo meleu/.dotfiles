@@ -7,14 +7,13 @@
 # Explaining the claude arguments:
 #
 # --permission-mode dontAsk - auto-denies tools (unless pre-approved)
-# --max-turns 1 - ensures a single response with no follow-up agentic actions
 # --tools "" - disables all tools (no file reading, no agentic loops, etc.)
 # --print - non-interactive, exits after one response
+# [currently not used] --max-turns 1 - ensures a single response with no follow-up agentic actions
 
 gum spin --spinner=points --title=Thinking... -- \
   claude \
   --permission-mode dontAsk \
-  --max-turns 1 \
   --tools "" \
   --print \
   "$@" \

@@ -5,6 +5,14 @@
 
 export PATH="${HOME}/bin:${HOME}/.local/bin:${PATH}"
 
+# use psql from Homebrew
+if [[ -d /home/linuxbrew/.linuxbrew/opt/libpq/bin ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
+fi
+
+# remove duplications from the PATH
+export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
+
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
@@ -168,17 +176,6 @@ source "${HOME}/.local/share/blesh/ble.sh" --noattach 2> /dev/null
 # export CHEAT_USE_FZF=true
 # source "${HOME}/.config/cheat/cheat-completion.bash"
 
-# added by `terraform -install-autocomplete`
-complete -C /home/linuxbrew/.linuxbrew/Cellar/terraform/1.12.2/bin/terraform terraform
-
-# use psql from Homebrew
-if [[ -d /home/linuxbrew/.linuxbrew/opt/libpq/bin ]]; then
-  export PATH="/home/linuxbrew/.linuxbrew/opt/libpq/bin:$PATH"
-fi
-
-# remove duplications from the PATH
-export PATH="$(echo -e "${PATH//:/\\n}" | sort -u | xargs | tr ' ' :)"
-
 # if kubectx is installed, create a custom KUBECONFIG variable
 list_kubeconfig() {
   local -r kubeconfig_files=(~/.kube/*.yml ~/.kube/*.yaml)
@@ -187,3 +184,5 @@ list_kubeconfig() {
 }
 
 export KUBECONFIG="$(list_kubeconfig)"
+
+set +x

@@ -80,8 +80,7 @@ hello() {
   echo "Hello, World!"
 }
 
-[[ "${BASH_SOURCE[0]}" != "$0" ]] && return
-hello "$@"
+[[ "${BASH_SOURCE[0]}" == "$0" ]] || hello "$@"
 _EoF_
 }
 
