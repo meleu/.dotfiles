@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-source "${BATS_TEST_DIRNAME}/setup.bats"
+source "${BATS_TEST_DIRNAME}/bats-extra.bats"
 
 @test "urlencode works for a URL" {
   run urlencode "https://meleu.sh/"

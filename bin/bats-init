@@ -4,36 +4,53 @@ set -Eeuo pipefail
 trap trap_error ERR
 
 main() {
-  is_git_repo
+  echo "I'm about to create a 'test/' directory and install BATS tooling."
+  confirm "Do you want to proceed?" || exit
 
   mkdir -p test
 
-  install_bats_repos
   create_makefile
+  install_bats_repos
+  create_bats_helper
   create_hello_test
-  create_hello
 
   make test
 
   echo "done!"
 }
 
+confirm() {
+  local answer
+  read -rp "${1:-Continue?} [y/N] " answer
+  [[ ${answer,,} == y* ]]
+}
+
 install_bats_repos() {
-  # bats-core: o bats propriamente dito (útil para usarmos em pipelines)
+  local cmd_git_get=()
+
+  if is_git_repo; then
+    echo "We're in a git repository, let's add BATS tooling as submodules."
+    cmd_git_get=(git sumodule add)
+  else
+    echo "We're NOT in a git repository, let's just git clone BATS tooling."
+    cmd_git_get=(git clone)
+  fi
+
+  # bats-core: the BATS itself
   echo -e "\n---> installing bats-core... <---"
-  git submodule add \
+  "${cmd_git_get[@]}" \
     https://github.com/bats-core/bats-core.git \
     test/bats
 
-  # bats-assert: responsável pelas asserções
+  # bats-assert: responsible for the assertions
   echo -e "\n---> installing bats-assert... <---"
-  git submodule add \
+  "${cmd_git_get[@]}" \
     https://github.com/bats-core/bats-assert.git \
     test/test_helper/bats-assert
 
-  # bats-support: responsável por mensagems de falha mais amigáveis
+  # bats-support: responsible for the friendly error messages
   echo -e "\n---> installing bats-support... <---"
-  git submodule add \
+  "${cmd_git_get[@]}" \
     https://github.com/bats-core/bats-support.git \
     test/test_helper/bats-support
 }
@@ -51,41 +68,44 @@ test:
 _EoF_
 }
 
+create_bats_helper() {
+  cat << '_EoF_' > test/bats_helper.sh
+#!/usr/bin/env bash
+# Source this file to get the basic assertions.
+
+load 'test_helper/bats-support/load'
+load 'test_helper/bats-assert/load'
+_EoF_
+}
+
 create_hello_test() {
   cat << '_EoF_' > test/hello_test.bats
 #!/usr/bin/env bats
 
 setup() {
-  load 'test_helper/bats-support/load'
-  load 'test_helper/bats-assert/load'
-
-  source "${BATS_TEST_DIRNAME}/../hello"
+  source "${BATS_TEST_DIRNAME}/bats_helper.sh"
 }
 
+###############################################################
+# A simple hello-world demo (delete it once you're convinced) #
+###############################################################
+
+# Test Code:
 @test "say 'Hello, World!'" {
   run hello
   assert_output "Hello, World!"
 }
-_EoF_
-}
 
-create_hello() {
-  cat << '_EoF_' > hello
-#!/usr/bin/env bash
-
-set -Eeuo pipefail
-trap 'echo "[ERROR]: ${BASH_SOURCE}:${FUNCNAME}:${LINENO}"' ERR
-
+# Production Code:
+# (in a real-world scenario, it would be in its own file)
 hello() {
   echo "Hello, World!"
 }
-
-[[ "${BASH_SOURCE[0]}" == "$0" ]] || hello "$@"
 _EoF_
 }
 
 is_git_repo() {
-  git rev-parse --is-inside-work-tree > /dev/null
+  git rev-parse --is-inside-work-tree > /dev/null 2>&1
 }
 
 trap_error() {
