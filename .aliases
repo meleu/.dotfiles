@@ -128,6 +128,9 @@ alias kfg='echo $(kubectl config current-context):$(kubectl config view --minify
 # reading rss feeds
 alias rss='eilmeldung'
 
+# watchexec is not interrupted with a simple Ctrl+C
+alias killwatch='pkill watchexec'
+
 # NOTE: this was previously simpler, using charmbracelet/mods
 # I reconfigured to use Claude Code because I don't have API keys anymore.
 alias ai-sh='ai --system-prompt-file ~/.config/ai-roles/shell.md'
