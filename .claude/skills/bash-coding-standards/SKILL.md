@@ -20,19 +20,17 @@ reading everything.
 
 ## Reference map
 
-| Concern | Read when | File |
-|---|---|---|
-| Script setup | Starting any script; strict mode, shebang, script-dir detection | `references/script-setup.md` |
-| Variable & data safety | Quoting, arrays, `[[ ]]`, command substitution | `references/variable-safety.md` |
-| Input validation | Checking files, dirs, required vars, dependencies | `references/input-validation.md` |
-| Error handling | Traps, cleanup, exit safety | `references/error-handling.md` |
-| Logging | Structured, leveled log output | `references/logging.md` |
-| Argument parsing | CLI flags, usage text, named parameters | `references/argument-parsing.md` |
-| File operations | Safe move/remove, atomic writes, temp files | `references/file-operations.md` |
-| Function design | Function templates | `references/function-design.md` |
-| Idempotency & dry-run | Safe-to-rerun scripts, preview mode | `references/idempotency-and-dry-run.md` |
-| Process orchestration | Background jobs, signal handling | `references/process-orchestration.md` |
-| Linting | Running shellcheck; justifying disables | `references/linting.md` |
+- [script-setup.md](references/script-setup.md) - Starting any script; strict mode, shebang, script-dir detection
+- [variable-safety.md](references/variable-safety.md) - Quoting, arrays, `[[ ]]`, command substitution
+- [input-validation.md](references/input-validation.md) - Checking files, dirs, required vars, dependencies
+- [error-handling.md](references/error-handling.md) - Traps, cleanup, exit safety
+- [logging.md](references/logging.md) - Structured, leveled log output
+- [argument-parsing.md](references/argument-parsing.md) - CLI flags, usage text, named parameters
+- [file-operations.md](references/file-operations.md) - Safe move/remove, atomic writes, temp files
+- [function-design.md](references/function-design.md) - Function templates
+- [idempotency-and-dry-run.md](references/idempotency-and-dry-run.md) - Safe-to-rerun scripts, preview mode
+- [process-orchestration.md](references/process-orchestration.md) - Background jobs, signal handling
+- [linting.md](references/linting.md) - Running shellcheck; justifying disables
 
 ## Review checklist
 
