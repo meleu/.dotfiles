@@ -1,5 +1,4 @@
 #!/bin/sh
-# shellcheck disable=1091
 
 # private stuff
 if [ -f "${HOME}/.functions_private" ]; then

@@ -114,6 +114,7 @@ alias glci='gitlab-ci-local'
 
 # sync current branch with main
 alias mergemain='git checkout main && git pull && git checkout - && git pull && git merge main'
+alias mergemaster='git checkout master && git pull && git checkout - && git pull && git merge master'
 
 # update kitty:
 # https://sw.kovidgoyal.net/kitty/binary/
@@ -143,3 +144,6 @@ alias ai-jq='ai --system-prompt-file ~/.config/ai-roles/jq.md'
 alias ai-rb='ai --system-prompt-file ~/.config/ai-roles/ruby.md'
 alias ai-go='ai --system-prompt-file ~/.config/ai-roles/golang.md'
 alias ai-net='ai --system-prompt-file ~/.config/ai-roles/networking.md'
+
+alias fabric='fabric-ai'
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock docker.io/wagoodman/dive"

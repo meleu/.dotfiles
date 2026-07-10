@@ -30,7 +30,7 @@ install_bats_repos() {
 
   if is_git_repo; then
     echo "We're in a git repository, let's add BATS tooling as submodules."
-    cmd_git_get=(git sumodule add)
+    cmd_git_get=(git submodule add)
   else
     echo "We're NOT in a git repository, let's just git clone BATS tooling."
     cmd_git_get=(git clone)
