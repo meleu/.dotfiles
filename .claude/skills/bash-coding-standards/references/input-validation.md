@@ -47,12 +47,10 @@ Verify all external commands up front and report every missing one at once.
 ```bash
 check_dependencies() {
     local -a missing_deps=()
-    local -a required=("jq" "curl" "git")
 
-    for cmd in "${required[@]}"; do
-        if ! command -v "$cmd" &>/dev/null; then
-            missing_deps+=("$cmd")
-        fi
+    for cmd in "$@"; do
+        command -v "$cmd" &>/dev/null \
+          || missing_deps+=("$cmd")
     done
 
     if [[ ${#missing_deps[@]} -gt 0 ]]; then
@@ -61,5 +59,5 @@ check_dependencies() {
     fi
 }
 
-check_dependencies
+check_dependencies jq curl git
 ```
