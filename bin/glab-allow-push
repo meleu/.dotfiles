@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# glab-allow-push - manage Maintainers in the push allowlist of `master`.
+#
+# Must be run inside a git repo with a GitLab remote (uses `glab api`).
+
+set -Eeuo pipefail
+
+readonly DEPS=(glab jq)
+readonly BRANCH="master"
+readonly MAINTAINER_LEVEL=40
+readonly API_PATH="projects/:id/protected_branches/${BRANCH}"
+
+main() {
+  check_dependencies "${DEPS[@]}"
+
+  case "${1:-}" in
+    on) allow_push_on ;;
+    off) allow_push_off ;;
+    -h | --help) usage 0 ;;
+    *) usage 1 >&2 ;;
+  esac
+}
+
+usage() {
+  cat << EOF
+Usage: ${0##*/} <on|off>
+
+  on    allow Maintainers to push to '${BRANCH}'
+  off   remove Maintainers from the push allowlist of '${BRANCH}'
+EOF
+  exit "${1:-0}"
+}
+
+allow_push_on() {
+  if [[ -n "$(maintainer_push_id)" ]]; then
+    printf 'Maintainers already allowed to push to %s. Nothing to do.\n' "$BRANCH"
+    return 0
+  fi
+
+  printf '{"allowed_to_push":[{"access_level":%d}]}' "$MAINTAINER_LEVEL" \
+    | glab api --method PATCH "$API_PATH" \
+      -H "Content-Type: application/json" --input - > /dev/null
+
+  printf 'Maintainers now allowed to push to %s.\n' "$BRANCH"
+}
+
+allow_push_off() {
+  local id
+  id="$(maintainer_push_id)"
+
+  if [[ -z "$id" ]]; then
+    printf 'Maintainers not in the push allowlist of %s. Nothing to do.\n' "$BRANCH"
+    return 0
+  fi
+
+  printf '{"allowed_to_push":[{"id":%d,"_destroy":true}]}' "$id" \
+    | glab api --method PATCH "$API_PATH" \
+      -H "Content-Type: application/json" --input - > /dev/null
+
+  printf 'Maintainers removed from the push allowlist of %s.\n' "$BRANCH"
+}
+
+maintainer_push_id() {
+  glab api "$API_PATH" \
+    | jq --argjson level "$MAINTAINER_LEVEL" \
+      '.push_access_levels[] | select(.access_level == $level) | .id'
+}
+
+check_dependencies() {
+  local -a missing_deps=()
+
+  for cmd in "$@"; do
+    command -v "$cmd" &> /dev/null \
+      || missing_deps+=("$cmd")
+  done
+
+  if [[ ${#missing_deps[@]} -gt 0 ]]; then
+    printf 'ERROR: Missing required commands: %s\n' "${missing_deps[*]}" >&2
+    return 1
+  fi
+}
+
+######################################################################
+
+main "$@"
