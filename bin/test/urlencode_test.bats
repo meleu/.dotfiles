@@ -39,7 +39,8 @@ setup() {
 }
 
 @test "encodes an embedded newline" {
-  run "$URLENCODE" "$(printf 'a\nb')"
+  run "$URLENCODE" 'a
+b'
   assert_output 'a%0Ab'
 }
 
