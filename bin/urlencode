@@ -8,23 +8,21 @@
 # Inspiration:
 # https://github.com/dylanaraps/pure-bash-bible#percent-encode-a-string
 
-
 urlencode() {
   local LC_ALL=C
-  local string="$*"
+  local string="${*}"
   local length="${#string}"
   local char
 
-  for (( i = 0; i < length; i++ )); do
+  for ((i = 0; i < length; i++)); do
     char="${string:i:1}"
     if [[ "$char" == [a-zA-Z0-9.~_-] ]]; then
-      printf "$char" 
+      printf "$char"
     else
-      printf '%%%02X' "'$char" 
+      printf '%%%02X' "'$char"
     fi
   done
   printf '\n' # opcional
 }
 
 urlencode "$@"
-
