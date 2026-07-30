@@ -64,7 +64,7 @@ prefix = "ctrl+a"
 # help = "prefix+?"
 # settings = "prefix+s"
 # detach = "prefix+q"
-# reload_config = "prefix+shift+r"
+reload_config = "prefix+ctrl+r"
 # open_notification_target = "prefix+o"
 # workspace_picker = "prefix+w"
 # goto = "prefix+g"
@@ -89,7 +89,7 @@ prefix = "ctrl+a"
 # close_tab = "prefix+shift+x"
 # rename_pane = "prefix+shift+p"
 # edit_scrollback = "prefix+e"
-edit_scrollback = "prefix+ctrl+e"
+edit_scrollback = "prefix+shift+e"
 focus_pane_left = ["prefix+h", "ctrl+alt+h"]
 focus_pane_down = ["prefix+j", "ctrl+alt+j"]
 focus_pane_up = ["prefix+k", "ctrl+alt+k"]
@@ -97,12 +97,13 @@ focus_pane_right = ["prefix+l", "ctrl+alt+l"]
 # cycle_pane_next = "prefix+tab"
 # cycle_pane_previous = "prefix+shift+tab"
 # last_pane = ""          # optional, unset by default; bind e.g. "prefix+tab" for global back-and-forth
+last_pane = "prefix+tab"
 split_vertical = "prefix+\\"
 split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
 # zoom = "prefix+z"       # legacy alias: fullscreen
 # resize_mode = "prefix+r"
-toggle_sidebar = "prefix+e"
+toggle_sidebar = "prefix+ctrl+e"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
@@ -123,6 +124,27 @@ toggle_sidebar = "prefix+e"
 key = "prefix+ctrl+g"
 type = "popup"
 command = "lazygit"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+ctrl+c"
+type = "popup"
+command = "cd ~/.config/herdr/; nvim config.toml; herdr server reload-config"
+width = "60%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+ctrl+v"
+type = "popup"
+command = "nxcli connect; gum confirm Continue?"
+width = "50%"
+height = "51%"
+
+[[keys.command]]
+key = "prefix+ctrl+t"
+type = "popup"
+command = "btop"
 width = "90%"
 height = "90%"
 

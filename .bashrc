@@ -160,17 +160,9 @@ case "$OSTYPE" in
     ;;
 esac
 
-# fzf
-eval "$(fzf --bash 2> /dev/null)"
-
 # zoxide - smarter cd command
 # https://github.com/ajeetdsouze/zoxide
 eval "$(zoxide init bash 2> /dev/null)"
-
-# trying ble.sh
-# https://github.com/akinomyoga/ble.sh
-source "${HOME}/.local/share/blesh/ble.sh" --noattach 2> /dev/null
-[[ ! ${BLE_VERSION-} ]] || ble-attach
 
 # cheat: enable autocompletion
 # export CHEAT_USE_FZF=true
@@ -185,4 +177,16 @@ list_kubeconfig() {
 
 export KUBECONFIG="$(list_kubeconfig)"
 
-set +x
+# fzf
+eval "$(fzf --bash 2> /dev/null)"
+
+# trying ble.sh
+# https://github.com/akinomyoga/ble.sh
+source "${HOME}/.local/share/blesh/ble.sh" --noattach 2> /dev/null
+[[ ! ${BLE_VERSION-} ]] || ble-attach
+
+# Flyline - enhanced Bash experience
+# if [[ -f ~/.local/lib/libflyline.so ]]; then
+#   enable -f /home/meleu/.local/lib/libflyline.so flyline
+#   source ~/.flyline.sh
+# fi
