@@ -145,5 +145,6 @@ alias ai-rb='ai --system-prompt-file ~/.config/ai-roles/ruby.md'
 alias ai-go='ai --system-prompt-file ~/.config/ai-roles/golang.md'
 alias ai-net='ai --system-prompt-file ~/.config/ai-roles/networking.md'
 
-alias fabric='fabric-ai'
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock docker.io/wagoodman/dive"
+
+alias dcr='docker container run --rm -it'

@@ -7,11 +7,11 @@ onboarding = false
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-name = "catppuccin-latte"
+name = "tokyo-night"
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.
 # Existing manual behavior is unchanged unless this is true.
-auto_switch = true
+auto_switch = false
 dark_name = "catppuccin"
 light_name = "catppuccin-latte"
 
@@ -124,6 +124,7 @@ toggle_sidebar = "prefix+ctrl+e"
 key = "prefix+ctrl+g"
 type = "popup"
 command = "lazygit"
+description = "lazygit"
 width = "90%"
 height = "90%"
 
@@ -131,6 +132,7 @@ height = "90%"
 key = "prefix+ctrl+c"
 type = "popup"
 command = "cd ~/.config/herdr/; nvim config.toml; herdr server reload-config"
+description = "open herdr config"
 width = "60%"
 height = "80%"
 
@@ -138,6 +140,7 @@ height = "80%"
 key = "prefix+ctrl+v"
 type = "popup"
 command = "nxcli connect; gum confirm Continue?"
+description = "NetExtender VPN"
 width = "50%"
 height = "51%"
 
@@ -145,6 +148,7 @@ height = "51%"
 key = "prefix+ctrl+t"
 type = "popup"
 command = "btop"
+description = "btop"
 width = "90%"
 height = "90%"
 
@@ -257,6 +261,7 @@ pane_gaps = false
 # accent = "cyan"
 
 # Background notification popup delivery
+show_agent_labels_on_pane_borders = true
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
