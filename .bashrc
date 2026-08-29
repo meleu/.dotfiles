@@ -25,6 +25,9 @@ export VISUAL="$EDITOR"
 
 # using bat as manpager (shows some colors that can improve readability)
 export MANPAGER='sh -c "col --no-backspaces --spaces | bat --plain --language man"'
+# make groff use overstrike instead of ANSI colors, for `col` above to work
+# (the lack of this broke man rendering on Omarchy)
+export MANROFFOPT='-c'
 
 # Shell Options
 ###############################################################################
@@ -190,3 +193,6 @@ source "${HOME}/.local/share/blesh/ble.sh" --noattach 2> /dev/null
 #   enable -f /home/meleu/.local/lib/libflyline.so flyline
 #   source ~/.flyline.sh
 # fi
+
+# added after installing Rust via Omarchy menu
+. "$HOME/.cargo/env"
