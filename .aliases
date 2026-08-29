@@ -39,8 +39,15 @@ case "$OSTYPE" in
     alias setclip='pbpaste'
     ;;
   *) # Linux (hopefully)
-    alias getclip='xclip -selection clipboard -o'
-    alias setclip='xclip -selection c'
+    if command -v xclip > /dev/null 2>&1; then
+      # X11
+      alias getclip='xclip -selection clipboard -o'
+      alias setclip='xclip -selection c'
+    else
+      # Wayland
+      alias getclip='wl-paste'
+      alias setclip='wl-copy'
+    fi
     ;;
 esac
 
