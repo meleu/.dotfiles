@@ -1,7 +1,7 @@
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: >
+      command: >
         delta
         --dark
         --paging=never
