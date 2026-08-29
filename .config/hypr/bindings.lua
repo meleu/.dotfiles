@@ -80,3 +80,4 @@ o.bind("SUPER + ALT + K", "Keybindings", "omarchy-menu-keybindings")
 
 o.bind("SUPER + F", "File manager", { omarchy = "nautilus" })
 o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
+o.bind("SUPER + O", "Toggle window split vertical/horizontal", hl.dsp.layout("togglesplit"))
