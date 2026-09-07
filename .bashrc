@@ -158,7 +158,7 @@ case "$OSTYPE" in
     # Homebrew config
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv 2> /dev/null)"
     # using mise-en-place: https://mise.jdx.dev/
-    eval "$(/home/linuxbrew/.linuxbrew/bin/mise activate bash 2> /dev/null)"
+    eval "$(mise activate bash 2> /dev/null)"
     export MISE_NODE_COREPACK=true
     ;;
 esac

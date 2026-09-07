@@ -155,3 +155,6 @@ alias ai-net='ai --system-prompt-file ~/.config/ai-roles/networking.md'
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock docker.io/wagoodman/dive"
 
 alias dcr='docker container run --rm -it'
+
+# list client's class so I can use it in hyprland.lua tand pin to specific workspaces
+alias hyprctl-class-list="hyprctl clients -j | jq -r '.[].class'"
