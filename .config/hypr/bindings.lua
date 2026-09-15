@@ -6,35 +6,37 @@
 
 -- disable annoying defaults
 ----------------------------
-hl.unbind("SUPER + F")               -- full screen
-hl.unbind("SUPER + SHIFT + A")       -- AI (ChatGPT)
-hl.unbind("SUPER + SHIFT + B")       -- Browswer
-hl.unbind("SUPER + SHIFT + E")       -- Email
-hl.unbind("SUPER + SHIFT + F")       -- file manager
-hl.unbind("SUPER + SHIFT + S")       -- Google Maps
-hl.unbind("SUPER + SHIFT + P")       -- Google Photos
-hl.unbind("SUPER + SHIFT + M")       -- Music (Spotify)
-hl.unbind("SUPER + SHIFT + X")       -- X
+hl.unbind("SUPER + F") -- full screen
+hl.unbind("SUPER + SHIFT + A") -- AI (ChatGPT)
+hl.unbind("SUPER + SHIFT + B") -- Browswer
+hl.unbind("SUPER + SHIFT + E") -- Email
+hl.unbind("SUPER + SHIFT + F") -- file manager
+hl.unbind("SUPER + SHIFT + S") -- Google Maps
+hl.unbind("SUPER + SHIFT + P") -- Google Photos
+hl.unbind("SUPER + SHIFT + M") -- Music (Spotify)
+hl.unbind("SUPER + SHIFT + X") -- X
 hl.unbind("SUPER + SHIFT + ALT + X") -- X Compose
-hl.unbind("SUPER + SHIFT + SLASH")   -- Password manager (1password)
-hl.unbind("SUPER + SHIFT + SPACE")   -- Toggle top bar
-hl.unbind("SUPER + L")               -- Toggle workspace layout
-hl.unbind("SUPER + K")               -- Show Keybindings
-hl.unbind("SUPER + ALT + K")         -- Tmux keybindings
-hl.unbind("SUPER + ALT + RETURN")    -- Launch tmux
-hl.unbind("SUPER + CTRL + K")        -- Herdr keybindings
-hl.unbind("SUPER + CTRL + L")        -- Lock screen
-hl.unbind("SUPER + CTRL + H")        -- Hardware???
-hl.unbind("SUPER + ALT + F")         -- Maximize (full width)
-hl.unbind("SUPER + J")               -- Window split vertical/horizontal
-hl.unbind("SUPER + O")               -- Pop window out
-hl.unbind("SUPER + G")               -- Toggle window grouping
-hl.unbind("SUPER + W")               -- Close window
+hl.unbind("SUPER + SHIFT + SLASH") -- Password manager (1password)
+hl.unbind("SUPER + SHIFT + SPACE") -- Toggle top bar
+hl.unbind("SUPER + L") -- Toggle workspace layout
+hl.unbind("SUPER + K") -- Show Keybindings
+hl.unbind("SUPER + ALT + K") -- Tmux keybindings
+hl.unbind("SUPER + ALT + RETURN") -- Launch tmux
+hl.unbind("SUPER + CTRL + K") -- Herdr keybindings
+hl.unbind("SUPER + CTRL + L") -- Lock screen
+hl.unbind("SUPER + CTRL + H") -- Hardware???
+hl.unbind("SUPER + ALT + F") -- Maximize (full width)
+hl.unbind("SUPER + J") -- Window split vertical/horizontal
+hl.unbind("SUPER + O") -- Pop window out
+hl.unbind("SUPER + G") -- Toggle window grouping
+hl.unbind("SUPER + W") -- Close window
 
 ---------------
 -- applications
 ---------------
+--o.bind("SUPER", "O", "exec, omarchy-shell shell summon bibek.obsidian-search")-
 o.bind("SUPER + ALT + O", "Obsidian Search", "omarchy-shell shell summon bibek.obsidian-search")
+o.bind("SUPER + SHIFT + V", "VPN", "xdg-terminal-exec --app-id=TUI.float -e dg vpn on")
 -- obsidian-quick-switcher requires Obsidian CLI
 -- o.bind(
 --   "SUPER + ALT + O",
@@ -42,11 +44,7 @@ o.bind("SUPER + ALT + O", "Obsidian Search", "omarchy-shell shell summon bibek.o
 --   "omarchy-shell shell toggle mateuszkowalczyk.obsidian-quick-switcher '{}'"
 -- )
 
-o.bind(
-  "SUPER + SHIFT + B",
-  "Bookmarks menu",
-  "omarchy-shell shell toggle io.github.meleu.bmm '{}'"
-)
+o.bind("SUPER + SHIFT + B", "Bookmarks menu", "omarchy-shell shell toggle io.github.meleu.bmm '{}'")
 
 o.bind("SUPER + SHIFT + A", "AI (Claude Desktop)", { launch = "claude-desktop", focus = true })
 o.bind("SUPER + SHIFT + M", "Google Maps", { webapp = "https://maps.google.com/", focus = true })
@@ -115,7 +113,6 @@ o.bind("SUPER + ALT + K", "Keybindings", "omarchy-menu-keybindings")
 o.bind("SUPER + F", "File manager", { omarchy = "nautilus" })
 o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
 o.bind("SUPER + O", "Toggle window split vertical/horizontal", hl.dsp.layout("togglesplit"))
-
 
 -------------------------------------
 -- original instructions in this file

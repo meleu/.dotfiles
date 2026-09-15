@@ -7,17 +7,21 @@ onboarding = false
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-name = "tokyo-night"
+# Use the terminal palette, which follows the Omarchy theme
+name = "terminal"
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.
 # Existing manual behavior is unchanged unless this is true.
 auto_switch = false
-dark_name = "catppuccin"
-light_name = "catppuccin-latte"
+# dark_name = "catppuccin"
+# light_name = "catppuccin-latte"
 
 # Override individual color tokens on top of the base theme.
 # Accepts: hex (#rrggbb), named colors, rgb(r,g,b), or panel_bg = "reset"
-# [theme.custom]
+[theme.custom]
+# Active tab is panel_bg text on the accent, so use ANSI black (as Omarchy does)
+panel_bg = "black"
+
 # panel_bg = "reset"
 # accent = "#f5c2e7"
 # red = "#ff6188"
@@ -258,7 +262,7 @@ pane_gaps = false
 
 # Accent color for highlights, borders, and navigation UI.
 # Accepts: hex (#89b4fa), named colors (cyan, blue, magenta), or rgb(r,g,b)
-# accent = "cyan"
+accent = "blue"
 
 # Background notification popup delivery
 show_agent_labels_on_pane_borders = true

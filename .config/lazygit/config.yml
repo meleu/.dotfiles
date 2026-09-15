@@ -3,7 +3,7 @@ git:
     - colorArg: always
       command: >
         delta
-        --dark
+        --detect-dark-light=always
         --paging=never
         --line-numbers
         --hyperlinks
@@ -12,12 +12,12 @@ git:
   # If true, do not allow force pushes
   disableForcePushing: true
 
-# NOTE: This is experimental! Not really present in my workflow!
 # Auto-fill commit message form with the output of `generate-commit-message`
 customCommands:
   - key: "<c-y>"
     context: "files"
     description: "Commit with generated message"
+    loadingText: "Generating commit message..."
     prompts:
       - type: "input"
         title: "Commit message"
@@ -25,4 +25,4 @@ customCommands:
         initialValue: '{{ runCommand "generate-commit-message" }}'
         # suggestions:
         #   command: "generate-commit-message"
-    command: "git commit -m '{{.Form.Msg}}'"
+    command: "git commit -m {{.Form.Msg | quote}}"
