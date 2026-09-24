@@ -1,9 +1,20 @@
 git:
   diffRenderers:
-    - colorArg: always
+    # Alternate between `delta dark` and `delta light` by pressing `\`
+    - name: delta dark
+      colorArg: always
       command: >
         delta
-        --detect-dark-light=always
+        --dark
+        --paging=never
+        --line-numbers
+        --hyperlinks
+        --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - name: delta light
+      colorArg: always
+      command: >
+        delta
+        --light
         --paging=never
         --line-numbers
         --hyperlinks
