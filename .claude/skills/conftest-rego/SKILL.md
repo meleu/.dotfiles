@@ -99,8 +99,6 @@ test_ignore_other_kinds if {
 - Comment only Rego-specific semantics (undefined, negation), not the obvious.
 - `# METADATA` annotations on packages and public rules:
     - public rule `title:` is `<ID> - <summary>` (e.g. `K8S001 - Deny containers running as root`);
-    - messages start with the title via `rego.metadata.rule().title`;
-    - links in `related_resources:`, never hardcoded.
 
 ## Workflow
 
