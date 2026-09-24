@@ -12,7 +12,7 @@ Queried per namespace; everything else is a helper.
 | `violation`, `violation_<name>` | FAIL; may return objects |
 | `warn`, `warn_<name>` | WARN (exit 0 unless `--fail-on-warn`) |
 
-Always partial set rules: `deny contains msg if { ... }`. Prefer descriptive `deny_<name>` names (also required for exceptions).
+Always partial set rules: `deny contains msg if { ... }`. Prefer descriptive `deny_<name>` names (see Exceptions).
 
 ## Messages
 
@@ -20,9 +20,11 @@ Always partial set rules: `deny contains msg if { ... }`. Prefer descriptive `de
 - `violation` may return an object; `msg` shown, other keys land in structured output (`conftest test -o json`):
 
 ```rego
-violation contains {"msg": msg, "details": {"id": "K8S003"}} if {
+# METADATA
+# title: K8S003 - Require app label
+violation_app_label contains {"msg": msg, "details": {"label": "app"}} if {
 	not input.metadata.labels.app
-	msg := "Deployment must have an app label"
+	msg := sprintf("%s: Deployment must have an app label", [rego.metadata.rule().title])
 }
 ```
 
@@ -31,22 +33,30 @@ violation contains {"msg": msg, "details": {"id": "K8S003"}} if {
 `exception` returns rule-name suffixes to skip for current input. Only applies to `deny_<name>`, `violation_<name>`, `warn_<name>`; plain `deny`/`warn` can't be excepted. Group all `exception` definitions (Regal `messy-rule`).
 
 ```rego
-deny_latest_tag contains msg if {
+# METADATA
+# title: K8S002 - Require image digest
+deny_unpinned_image contains msg if {
+	input.kind == "Deployment"
 	some container in input.spec.template.spec.containers
-	endswith(container.image, ":latest")
-	msg := sprintf("container %q must pin its image tag", [container.name])
+	not _is_pinned(container.image) # also fails untagged images (implicit :latest)
+	msg := sprintf(
+		"%s: container %q must pin its image by digest",
+		[rego.metadata.rule().title, container.name],
+	)
 }
+
+_is_pinned(image) if contains(image, "@sha256:")
 
 exception contains rules if {
 	input.metadata.name in {"legacy-app", "sandbox"}
-	rules := ["latest_tag"]
+	rules := ["unpinned_image"]
 }
 ```
 
 ## Namespaces and layout
 
 - Default namespace `main`. Others only run with `-n <ns>` or `--all-namespaces`; wrong namespace = policy silently never runs.
-- Default policy dir `./policy`. Package mirrors directory **relative to it** (Regal default); file name not part of package:
+- Default policy dir `./policy`. Package path must match the trailing directories (Regal `directory-package-mismatch`); file name not part of package:
 
 ```text
 policy/
@@ -58,7 +68,8 @@ policy/
     └── k8s.rego               # package lib.k8s  -> import data.lib.k8s
 ```
 
-- Shared helpers in `lib/`, as functions taking args. Tiny projects: flat `policy/main.rego`, `package main`.
+- Shared helpers in `lib/`, as functions taking args. Tiny projects: `policy/main/main.rego`, `package main`
+  (not flat `policy/main.rego`: fails `directory-package-mismatch`).
 
 ## Inputs
 
@@ -86,8 +97,7 @@ deny contains msg if {
   `parse_config_file(path)` exists but resolves relative to the working directory; prefer inline.
 - `parse_config*` are Conftest-only builtins: run tests with `conftest verify`, not `opa test`.
 - Assert **which** rule fired: `some msg in pkg.deny` + `contains(msg, "K8S001")`. Pass case: `count(pkg.deny) == 0`.
-- Per rule: violating, compliant, checked field missing, out-of-scope input (e.g. another kind or file type).
-- Debug: `conftest verify --trace` / `--report`, `conftest test --trace ... 2>trace.log`; temporary `print()`, then remove.
+- Debug: `conftest verify --trace` / `--report fails`, `conftest test --trace ... 2>trace.log`; temporary `print()`, then remove.
 - Policies using data: `conftest verify -p policy -d data`.
 
 ## Config files
@@ -101,13 +111,10 @@ policy = "policy"
 all-namespaces = true
 ```
 
-`.regal/config.yaml`: Conftest entrypoints are implicit → ignore `no-defined-entrypoint`. Regal can't see `--data` contents → allow-list those refs in `unresolved-reference`:
+`.regal/config.yaml`: start from the bundled [regal.yaml](regal.yaml). Regal can't see `--data` contents → also allow-list those refs:
 
 ```yaml
 rules:
-  idiomatic:
-    no-defined-entrypoint:
-      level: ignore
   imports:
     unresolved-reference:
       level: error

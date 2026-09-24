@@ -11,6 +11,8 @@ Most items are enforced by Regal; its output names the rule and links docs.
 
 ## Rules
 
+**Logic model:** lines in a body are AND; multiple definitions of the same rule are OR.
+
 **Negation handles undefined.** Comparison on a missing field is undefined, so `deny` silently passes.
 
 ```rego
@@ -56,7 +58,7 @@ _privileged_containers contains container.name if {
 }
 ```
 
-**Unconditional values in head:** `image_name := split(input.image, ":")[0]`, not `image_name := x if { x := ... }`.
+**Unconditional values in head:** `kind := lower(input.kind)`, not `kind := x if { x := ... }`.
 
 ## Variables and data types
 
@@ -73,7 +75,8 @@ _privileged_containers contains container.name if {
 required_labels := {"app", "team", "env"}
 
 deny contains msg if {
-	missing := required_labels - object.keys(object.get(input.metadata, "labels", {}))
+	labels := object.get(input, ["metadata", "labels"], {}) # path form: missing metadata still fails
+	missing := required_labels - object.keys(labels)
 	count(missing) > 0
 	msg := sprintf("missing labels: %v", [missing])
 }
@@ -89,6 +92,9 @@ all_pinned if {
 }
 ```
 
+Gotcha: `every` over an empty collection is **true**; over a missing one, undefined.
+Guard with `count(input.spec.containers) > 0` when "none" should fail.
+
 ## Functions
 
 - Take arguments; don't read `input`/`data`/rules inside (reusable, testable):
@@ -98,6 +104,6 @@ all_pinned if {
 ## Regex, packages, imports
 
 - Raw strings for regex: `` regex.match(`^[a-z0-9-]+$`, name) ``.
-- Package mirrors directory relative to policy root (see CONFTEST.md).
+- Package path matches the trailing directories (Regal `directory-package-mismatch`; see CONFTEST.md).
 - Import packages, reference rules through them: `import data.lib.k8s` → `k8s.is_workload`.
 - Don't import `input` (whole-input alias OK: `import input as manifest`).
