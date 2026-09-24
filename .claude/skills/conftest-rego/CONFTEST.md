@@ -12,7 +12,7 @@ Queried per namespace; everything else is a helper.
 | `violation`, `violation_<name>` | FAIL; may return objects |
 | `warn`, `warn_<name>` | WARN (exit 0 unless `--fail-on-warn`) |
 
-Always partial set rules: `deny contains msg if { ... }`. Use `_<name>` suffix to make the rule more readable.
+Always partial set rules: `deny contains msg if { ... }`. Prefer descriptive `deny_<name>` names (also required for exceptions).
 
 ## Messages
 
@@ -81,12 +81,12 @@ deny contains msg if {
 ## Testing
 
 - `test_*` rules in `*_test.rego`, package `<pkg>_test`, importing package under test.
-- Input fixtures: `parse_config("<parser>", <raw string>)` inline, so they read like the real file (SKILL.md example).
+- Input fixtures: `parse_config("<parser>", <raw string>)` inline, so they read like the real file.
   Object literals only for tiny/synthetic inputs and `with data.x as {...}`.
   `parse_config_file(path)` exists but resolves relative to the working directory; prefer inline.
 - `parse_config*` are Conftest-only builtins: run tests with `conftest verify`, not `opa test`.
 - Assert **which** rule fired: `some msg in pkg.deny` + `contains(msg, "K8S001")`. Pass case: `count(pkg.deny) == 0`.
-- Per rule: violating, compliant, checked field missing, irrelevant `kind`.
+- Per rule: violating, compliant, checked field missing, out-of-scope input (e.g. another kind or file type).
 - Debug: `conftest verify --trace` / `--report`, `conftest test --trace ... 2>trace.log`; temporary `print()`, then remove.
 - Policies using data: `conftest verify -p policy -d data`.
 

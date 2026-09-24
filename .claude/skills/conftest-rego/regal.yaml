@@ -1,0 +1,6 @@
+# Default Regal config, used by scripts/check.sh when the project has none.
+rules:
+  idiomatic:
+    # Conftest entrypoints (deny, warn, violation) are implicit
+    no-defined-entrypoint:
+      level: ignore

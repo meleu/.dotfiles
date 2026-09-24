@@ -9,6 +9,8 @@ set -Eeuo pipefail
 
 readonly POLICY_DIR="${1:-policy}"
 readonly DATA_DIR="${2:-}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SCRIPT_DIR
 
 failures=0
 
@@ -27,6 +29,19 @@ conftest_capabilities() {
   opa capabilities --current \
     | opa eval --stdin-input --format raw \
       "json.marshal(object.union(input, {\"builtins\": array.concat(input.builtins, ${conftest_builtins})}))"
+}
+
+# Succeed if a Regal config exists in the policy dir or any parent,
+# mirroring Regal's own config discovery.
+has_regal_config() {
+  local dir
+  dir="$(cd "${POLICY_DIR}" && pwd)"
+
+  while true; do
+    [[ -f "${dir}/.regal/config.yaml" || -f "${dir}/.regal.yaml" ]] && return 0
+    [[ "${dir}" == / ]] && return 1
+    dir="$(dirname "${dir}")"
+  done
 }
 
 main() {
@@ -54,7 +69,9 @@ main() {
 
   run_step "opa check --strict" \
     opa check --strict --capabilities "${capabilities_file}" "${POLICY_DIR}"
-  run_step "regal lint" regal lint --no-color "${POLICY_DIR}"
+  local -a regal_args=(--no-color)
+  has_regal_config || regal_args+=(--config-file "${SCRIPT_DIR}/../regal.yaml")
+  run_step "regal lint" regal lint "${regal_args[@]}" "${POLICY_DIR}"
 
   run_step "conftest verify" conftest verify "${verify_args[@]}"
 
